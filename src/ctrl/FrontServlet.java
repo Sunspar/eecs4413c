@@ -31,6 +31,8 @@ public class FrontServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		
+		// fuck this
+		
 		//Load in the properties file
 		try {
 			Properties properties = new Properties();
