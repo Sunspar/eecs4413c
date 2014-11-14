@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="eecs4413c:war exploded">
+    <output-path>$PROJECT_DIR$/build/artifacts/eecs4413c_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="eecs4413c/WebContent/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="eecs4413c" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
