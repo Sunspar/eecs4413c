@@ -1,6 +1,8 @@
 package model;
 
+import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,4 +64,30 @@ public class DAO {
 		
 		return result;
 	}
+
+    public byte[] getCategoryImageById(String id) throws SQLException {
+        String queryString = "";
+        queryString += "SELECT PICTURE";
+        queryString += " FROM ROUMANI.CATEGORY";
+        queryString += " WHERE ID = ?";
+        
+        Connection conn = this.ds.getConnection();
+        PreparedStatement ps = conn.prepareStatement(queryString);
+        ps.setInt(1, extractIntegerType(id));
+        
+        ResultSet rs = ps.executeQuery();
+        
+        rs.next();
+        Blob imageBlob = rs.getBlob(0);
+        long length = imageBlob.length();
+    	return imageBlob.getBytes(0, (int) length);
+    }
+    
+    private int extractIntegerType(String arg) throws SQLException {
+    	try {
+    		return Integer.parseInt(arg);
+    	} catch (NumberFormatException e) {
+    		throw new SQLException(e.getMessage(), e.getCause());
+    	}
+    }
 }
