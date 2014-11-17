@@ -1,8 +1,8 @@
 package ctrl;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
+import model.DAO;
+
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 @WebServlet(
 		name = "Front Servlet for Foods R Us",
@@ -26,12 +29,11 @@ public class FrontServlet extends HttpServlet {
     }
 
 	/**
-	 * @see Servlet#init()
+	 * @see javax.servlet.Servlet#init()
 	 */
+    @Override
 	public void init() throws ServletException {
 		super.init();
-		
-		// fuck this
 		
 		//Load in the properties file
 		try {
@@ -39,13 +41,20 @@ public class FrontServlet extends HttpServlet {
 			String value = getServletContext().getInitParameter("SHARED_VALUES_FILE");
 			InputStream streamData = getServletContext().getResourceAsStream(value);
 			properties.load(streamData);
-			
+
+            // Save the properties object for various servlets to use
 			getServletContext().setAttribute(
 					getServletContext().getInitParameter("PROPERTIES"),
 					properties	
 			);
+
+            // Save the DAO for various servlets to use
+            getServletContext().setAttribute(
+                    properties.getProperty("INTERNAL_DAO"),
+                    new DAO()
+            );
 			
-		} catch (IOException e) {
+		} catch (IOException | NamingException e) {
 			throw new ServletException(e.getMessage(), e.getCause());
 		}
 	}
@@ -65,10 +74,8 @@ public class FrontServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String targetPage = ""; // WE DONT KNOW YET GOSH.
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
-		String testVal = props.getProperty("FD_TEST_VAL");
-		
-		
-		
+		String testVal = props.getProperty("INTERNAL_DAO");
+
 	}
 
 }
