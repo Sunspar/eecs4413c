@@ -75,6 +75,8 @@ public class FrontServlet extends HttpServlet {
 		String targetPage = ""; // WE DONT KNOW YET GOSH.
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		String testVal = props.getProperty("INTERNAL_DAO");
+		
+		// this is a test addition
 
 	}
 
