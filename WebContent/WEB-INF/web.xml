@@ -8,15 +8,24 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
+    <welcome-file>FrontServlet</welcome-file>
+    <welcome-file>ctrl.FrontServlet</welcome-file>
+    <welcome-file>FrontServlet</welcome-file>
   </welcome-file-list>
-  
   <context-param>
-  	<param-name>PROPERTIES</param-name>
-  	<param-value>PROPERTIES</param-value>
+    <param-name>PROPERTIES</param-name>
+    <param-value>PROPERTIES</param-value>
   </context-param>
-  
   <context-param>
-  	<param-name>SHARED_VALUES_FILE</param-name>
-  	<param-value>WEB-INF/classes/resources/values.properties</param-value>
+    <param-name>SHARED_VALUES_FILE</param-name>
+    <param-value>WEB-INF/classes/resources/values.properties</param-value>
   </context-param>
+	<servlet>
+		<servlet-name>A</servlet-name>
+		<servlet-class>ctrl.StartA</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>B</servlet-name>
+		<servlet-class>ctrl.StartB</servlet-class>
+	</servlet>
 </web-app>
