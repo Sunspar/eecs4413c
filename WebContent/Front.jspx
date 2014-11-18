@@ -47,16 +47,27 @@
 			
 			<c:choose>
 			<c:when test="${empty target}">
-				<h1>TIS THE SEASON TO BE JOLLY!</h1>
+				<div class="row">
 					<div class="col-md-12">
-						<div id="splash" >&#160;</div>
-						<h3>Test test test</h3>
-						<div id="splash" >&#160;</div>
+						<h1>Tis the season to be jolly!</h1>
 					</div>
-				<span class="glyphicon glyphicon-align-left" aria-hidden="true">This is a test</span>
-				Hello ... please choose something from the sidebar
-				<p>line</p><p>line</p><p>line</p><p>line</p><p>line</p>
-				<p>line</p><p>line</p><p>line</p><p>line</p><p>line</p>
+				</div>
+				<div class="row">
+					<div class="col-md-11" id="splash" >&#160;</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Start the New Year early with nutritious snacks!</h3>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-4 col-md-3"><img src="../res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
+					<div class="col-xs-4 col-md-3"><img src="../res/milk.png" class="img-responsive img-thumbnail"/></div>
+					<div class="col-xs-4 col-md-3"><img src="../res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
+					<div class="hidden-xs col-md-3"><img src="../res/milk.png" class="img-responsive img-thumbnail"/></div>
+				</div>
+				
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${target}"></jsp:include>
