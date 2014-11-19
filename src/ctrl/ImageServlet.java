@@ -21,6 +21,6 @@ public class ImageServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("[ImageServlet] Something called doPost() when it shouldn't have!");
+        System.out.println("[ImageServlet] Something called doPost() when it shouldn't have! ");
     }
 }
