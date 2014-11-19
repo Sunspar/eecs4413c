@@ -59,7 +59,8 @@ public class DAO {
 		ResultSet rs = conn.createStatement().executeQuery(queryString);
 		
 		while (rs.next()) {
-			//TODO Process the category into the bean class and further populate the result list
+			CategoryBean category = new CategoryBean(rs.getInt("ID"), rs.getString("NAME"), rs.getString("DESCRIPTION"), rs.getBytes("PICTURE"));
+			result.add(category);
 		}
 		
 		return result;
