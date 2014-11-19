@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class StartA
  */
 
-public class StartA extends HttpServlet {
+public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StartA() {
+    public CartServlet() {
         super();
     }
 
@@ -27,7 +27,7 @@ public class StartA extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String target = "/Front.jspx";
-		request.setAttribute("target", "A.jspx");
+		request.setAttribute("target", "Cart.jspx");
 		RequestDispatcher rd = request.getRequestDispatcher(target);
 		rd.forward(request, response);
 	}
