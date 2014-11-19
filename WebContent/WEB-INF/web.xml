@@ -20,12 +20,24 @@
     <param-name>SHARED_VALUES_FILE</param-name>
     <param-value>WEB-INF/classes/resources/values.properties</param-value>
   </context-param>
-	<servlet>
-		<servlet-name>A</servlet-name>
-		<servlet-class>ctrl.StartA</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>B</servlet-name>
-		<servlet-class>ctrl.StartB</servlet-class>
-	</servlet>
+  <servlet>
+    <servlet-name>A</servlet-name>
+    <servlet-class>ctrl.StartA</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>B</servlet-name>
+    <servlet-class>ctrl.StartB</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>ctrl.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ImageServlet</servlet-name>
+  	<servlet-class>ctrl.ImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ShoppingCartServlet</servlet-name>
+  	<servlet-class>ctrl.ShoppingCartServlet</servlet-class>
+  </servlet>
 </web-app>

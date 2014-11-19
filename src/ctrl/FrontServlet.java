@@ -87,10 +87,7 @@ public class FrontServlet extends HttpServlet {
 		System.out.println("In Front--finish *****************\n");
 		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
 		
-		// If the user doesnt have a cart, initialize one for them.
-		if (session.getAttribute(props.getProperty("INTERNAL_CART")) == null) {
-			session.setAttribute(props.getProperty("INTERNAL_CART"), new ShoppingCart());
-		}
+		
 		
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/A"))
 		{
