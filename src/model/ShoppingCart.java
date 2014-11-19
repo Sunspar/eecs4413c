@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class ShoppingCart {
-	private ArrayList<Object[]> cartContents;
+	private ArrayList<ShoppingCartItem> cartContents;
 	
 	public ShoppingCart() {
-		this.cartContents = new ArrayList<Object[]>();
+		this.cartContents = new ArrayList<ShoppingCartItem>();
 	}
 	
 	/**
@@ -20,9 +20,10 @@ public class ShoppingCart {
 		int idx = findCartItemPosition(item);
 		
 		if (idx >= 0) { // The item exists already, so lets just add to the current quantity
-			this.cartContents.get(idx)[1] = (Integer) this.cartContents.get(idx)[1] + quantity;
+			ShoppingCartItem cartItem = this.cartContents.get(idx);
+			cartItem.setQuantity(cartItem.getQuantity() + quantity);
 		} else { // The item doesnt exist, so lets just add it to the cart
-			this.cartContents.add(new Object[]{item, quantity});
+			this.cartContents.add(new ShoppingCartItem(item, quantity));
 		}
 	}
 	
@@ -36,7 +37,7 @@ public class ShoppingCart {
 		int idx = findCartItemPosition(itemName);
 		
 		if (idx >= 0) {
-			this.cartContents.get(idx)[1] = newQty;
+			this.cartContents.get(idx).setQuantity(newQty);
 		} else {
 			// DO NOTHING, this was a malformed request or something
 		}
@@ -66,7 +67,7 @@ public class ShoppingCart {
 	 */
 	private int findCartItemPosition(String itemName) {
 		for (int idx = 0; idx < this.cartContents.size(); idx++) {
-			if (this.cartContents.get(idx)[0].equals(itemName)) {
+			if (this.cartContents.get(idx).getItemName().equals(itemName)) {
 				return idx;
 			}
 		}

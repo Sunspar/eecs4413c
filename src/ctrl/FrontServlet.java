@@ -92,8 +92,6 @@ public class FrontServlet extends HttpServlet {
 			session.setAttribute(props.getProperty("INTERNAL_CART"), new ShoppingCart());
 		}
 		
-		
-		
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/A"))
 		{
 			request.setAttribute("ticket", "F-to-A");
