@@ -1,6 +1,7 @@
 package ctrl;
 
 import model.DAO;
+import model.ShoppingCart;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
@@ -78,12 +79,20 @@ public class FrontServlet extends HttpServlet {
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		String testVal = props.getProperty("INTERNAL_DAO");
 		
-		// this is a test addition
+		// Debug info at the start of front servlet
 		System.out.println("In Front--begin: *****************");
 		System.out.println("url = " + request.getRequestURL());
 		System.out.println("uri = " + request.getRequestURI());
 		System.out.println("pth = " + request.getPathInfo());
 		System.out.println("In Front--finish *****************\n");
+		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
+		
+		// If the user doesnt have a cart, initialize one for them.
+		if (session.getAttribute(props.getProperty("INTERNAL_CART")) == null) {
+			session.setAttribute(props.getProperty("INTERNAL_CART"), new ShoppingCart());
+		}
+		
+		
 		
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/A"))
 		{
