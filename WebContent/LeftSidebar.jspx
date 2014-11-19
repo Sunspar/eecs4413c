@@ -13,8 +13,8 @@
 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
 			<ul id="list-sidebar">
 				<li><a href="${pageContext.request.contextPath}/eFoods/">Home</a></li>
-				<li><a href="A">Mortgage Calculator</a></li>
-				<li><a href="B">SIS Reporting Engine</a></li>
+				<li><a href="${pageContext.request.contextPath}/eFoods/A">Mortgage Calculator</a></li>
+				<li><a href="${pageContext.request.contextPath}/eFoods/B">SIS Reporting Engine</a></li>
 				<li><a href="">other sidebar options</a></li>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="#">${cat.name}</a></li>

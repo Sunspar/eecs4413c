@@ -107,6 +107,7 @@ body {
 
 #header 
 {
+	padding-top: 10px;
 	height: 180px;
 	width: 100%;
 	background: #1abc9c;
