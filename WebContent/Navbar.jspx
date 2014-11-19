@@ -18,18 +18,17 @@
 		
 		
 		<div class="row subnav">
-			<div class="col-md-10">
+			<div class="col-md-9">
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/eFoods/">Home</a></li>
 				<li><a href="A">Mortgage Calculator</a></li>
-				<li><a href="B">SIS Reporting Engine</a></li>
-				<li><a href="">other sidebar options</a></li>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="#">${cat.name}</a></li>
 				</c:forEach>
 		</ul>
 		</div>
-  			<div class="col-md-2">
+  			<div class="col-md-3">
+  				<span class="glyphicon glyphicon-shopping-cart user">&#160;</span>
   				<span class="glyphicon glyphicon-user user">&#160;</span>
   				<a href="#" alt="#" class="user">Sign In</a>
   				&#160;
