@@ -79,11 +79,9 @@
 		</div><!-- /row -->
 		
 
-		<div class="row">
-			<div class="col-md-12" id="footer">
-				<p>Footer Goes Here</p>
-				Ticket = ${ticket}
-			</div>
+		<div class="row" id="footer">
+			<jsp:include page="Footer.jspx">
+	    	</jsp:include>
 		</div>
 		
 	</div>

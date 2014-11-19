@@ -14,6 +14,10 @@ html
 	background: #f1f6f9;
 }
 
+ul {
+	list-style: none;
+}
+
 a {
 	font-size: 1em;
 	color: #28e8b6;
@@ -191,5 +195,23 @@ h2
 {
 	/*background: #34495e;*/
 	border-radius: 0px 0px 10px 0px;
+}
+
+ul#list-sidebar {
+	list-style: none;
+}
+
+ul#list-sidebar li a {
+	color: #d35400;
+}
+
+#footer {
+	margin-top: 50px;
+	background-color: #1abc9c;
+}
+
+div#footer-col {
+	width: 50%;
+	margin: 0 auto;
 }
 

@@ -11,7 +11,7 @@
 
 		<h2>The Sidebar</h2>
 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-			<ul>
+			<ul id="list-sidebar">
 				<li><a href="${pageContext.request.contextPath}/eFoods/">Home</a></li>
 				<li><a href="A">Mortgage Calculator</a></li>
 				<li><a href="B">SIS Reporting Engine</a></li>
