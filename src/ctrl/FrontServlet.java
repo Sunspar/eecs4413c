@@ -89,18 +89,16 @@ public class FrontServlet extends HttpServlet {
 		
 		
 		
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/A"))
-		{
-			request.setAttribute("ticket", "F-to-A");
-			this.getServletContext().getNamedDispatcher("A").forward(request, response);
-		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/B"))
+		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart")) {
+			request.setAttribute("ticket", "F-to-Cart");
+			ctx.getNamedDispatcher("ShoppingCartServlet").forward(request, response);
+		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login"))
 		{
 			request.setAttribute("ticket", "F-to-B");
-			this.getServletContext().getNamedDispatcher("B").forward(request, response);
-		} 
-		else
-		{
+			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
+		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Image")) {
+			ctx.getNamedDispatcher("ImageServlet").forward(request, response);
+		} else {
 			DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
 			
 			request.setAttribute("ticket", "Front");
