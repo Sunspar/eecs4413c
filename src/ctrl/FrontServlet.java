@@ -93,22 +93,7 @@ public class FrontServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-<<<<<<< HEAD
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart")) {
-			request.setAttribute("ticket", "F-to-Cart");
-			ctx.getNamedDispatcher("ShoppingCartServlet").forward(request, response);
-		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login"))
-		{
-			request.setAttribute("ticket", "F-to-B");
-			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
-		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Image")) {
-			ctx.getNamedDispatcher("ImageServlet").forward(request, response);
-		} else {
-			DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
-			
-=======
+
 		/* Cart dispatcher */
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
@@ -122,7 +107,7 @@ public class FrontServlet extends HttpServlet {
 		} 
 		else
 		{
->>>>>>> 3b67f8a4baa42df863dd7b196629210bf141ba12
+
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
