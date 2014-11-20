@@ -8,12 +8,31 @@
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
+<head>
 	<title>Main Fragment</title>
-	</head>
+</head>
 <body>
-	<h1>CSE4413 Content A</h1>
-	I am A
-	</body>
+
+	<c:forEach var="cat" items="${categories}">
+		<c:if test="${cat.id == itemsByCat[0].catID}">
+			<c:set var="catName" value="${cat.name}"></c:set>
+		</c:if>
+	</c:forEach>
+	
+	<h1>Food Category: ${catName}</h1>
+
+	<ul>
+		<c:forEach var="x" items="${categories}">
+			<li>${x.name}</li>
+		</c:forEach>
+	</ul>
+	
+	<ul>
+		<c:forEach var="x" items="${itemsByCat}">
+			<li class="e-list-item">${x.name}</li>
+		</c:forEach>
+	</ul>
+
+</body>
 </html>
 </jsp:root>

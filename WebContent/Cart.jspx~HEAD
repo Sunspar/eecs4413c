@@ -9,11 +9,13 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Main Fragment</title>
+	<title>Cart Fragment</title>
 </head>
 <body>
-	<h1>CSE4413 Content B</h1>
-	I am B
+	<h1> EECS4413 Shopping Cart</h1><br />
+	<c:forEach var="item" items="${cartContents}">
+		${item.name}<br />
+	</c:forEach>
 </body>
 </html>
 </jsp:root>

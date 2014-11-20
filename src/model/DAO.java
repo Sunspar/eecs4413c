@@ -38,7 +38,41 @@ public class DAO {
 		while (rs.next()) {
 			//TODO Process the item into the bean class and further populate the result list
 		}
+		return result;
+	}
+	
+	/**
+	 * Queries the database for a list of items by Category
+	 * 
+	 * @return A list of {@link ItemBean}s, containing all items by category in the database
+	 * @throws SQLException if there was an error communicating with the database
+	 */
+	public List<ItemBean> getItemsByCategory(String id) throws SQLException {
+		List<ItemBean> result = new ArrayList<ItemBean>();
+		Connection conn = this.ds.getConnection();
 		
+		String queryString = "";
+		queryString += "SELECT *";
+		queryString += " FROM ROUMANI.ITEM WHERE CATID=?" ;
+		
+		PreparedStatement ps = conn.prepareStatement(queryString);
+		ps.setInt(1, this.extractID(id));
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			ItemBean item = new ItemBean(rs.getString("unit"), 
+					rs.getDouble("costPrice"), 
+					rs.getInt("supID"), 
+					rs.getInt("catID"), 
+					rs.getInt("reorder"), 
+					rs.getInt("onorder"), 
+					rs.getInt("qty"), 
+					rs.getDouble("price"), 
+					rs.getString("name"), 
+					rs.getString("number"));
+			result.add(item);
+		}
 		return result;
 	}
 	
@@ -91,4 +125,18 @@ public class DAO {
     		throw new SQLException(e.getMessage(), e.getCause());
     	}
     }
+    
+    
+    /** Parse function **/
+    private int extractID(String id) throws IllegalArgumentException {
+    	int result = 0;
+    	
+    	try {
+			result = Integer.parseInt(id);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("ID not an int!");
+		}
+		return result;
+    }
+    
 }
