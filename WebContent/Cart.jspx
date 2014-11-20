@@ -12,12 +12,10 @@
 	<title>eFoods - Shopping Cart</title>
 	</head>
 	<body>
-		<h1>Shopping Cart</h1>
-		<ul>
-			<li>Lego</li>
-			<li>Lego</li>
-			<li>Lego</li>
-		</ul>
+		<h1> EECS4413 Shopping Cart</h1><br />
+		<c:forEach var="item" items="${cartContents}">
+			${item.name}<br />
+		</c:forEach>
 	</body>
 </html>
 </jsp:root>
