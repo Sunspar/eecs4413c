@@ -13,18 +13,14 @@
 </head>
 <body>
 
-<%-- 	<c:forEach var="cat" items="${categories}">
-		<c:if test="${cat.id == itemsByCat[0].id}">
+	<c:forEach var="cat" items="${categories}">
+		<c:if test="${cat.id == itemsByCat[0].catID}">
 			<c:set var="catName" value="${cat.name}"></c:set>
 		</c:if>
-	</c:forEach> --%>
+	</c:forEach>
 	
-	
-	
-	<h1>Food Category:</h1>
-	
-	
-	
+	<h1>Food Category: ${catName}</h1>
+
 	<ul>
 		<c:forEach var="x" items="${categories}">
 			<li>${x.name}</li>
