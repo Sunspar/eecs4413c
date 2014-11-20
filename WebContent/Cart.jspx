@@ -9,11 +9,15 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	<title>Main Fragment</title>
+	<title>eFoods - Shopping Cart</title>
 	</head>
-<body>
-	<h1>CSE4413 Content A</h1>
-	I am A
+	<body>
+		<h1>Shopping Cart</h1>
+		<ul>
+			<li>Lego</li>
+			<li>Lego</li>
+			<li>Lego</li>
+		</ul>
 	</body>
 </html>
 </jsp:root>

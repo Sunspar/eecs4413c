@@ -216,3 +216,12 @@ div#footer-col {
 	margin: 0 auto;
 }
 
+li.e-list-item {
+	background-color: white;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	padding: 15px;
+	border: 1px solid grey;
+	width: 500px;
+}
+

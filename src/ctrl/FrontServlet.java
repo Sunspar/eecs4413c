@@ -87,30 +87,28 @@ public class FrontServlet extends HttpServlet {
 		System.out.println("In Front--finish *****************\n");
 		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
 		
+		DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
+		try {
+			request.setAttribute("categories", mDAO.getAllCategories());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/A"))
+		/* Cart dispatcher */
+		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
-			request.setAttribute("ticket", "F-to-A");
-			this.getServletContext().getNamedDispatcher("A").forward(request, response);
+			request.setAttribute("ticket", "F-to-Cart");
+			this.getServletContext().getNamedDispatcher("Cart").forward(request, response);
 		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/B"))
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category"))
 		{
-			request.setAttribute("ticket", "F-to-B");
-			this.getServletContext().getNamedDispatcher("B").forward(request, response);
+			request.setAttribute("ticket", "F-to-Cart");
+			this.getServletContext().getNamedDispatcher("Category").forward(request, response);
 		} 
 		else
 		{
-			DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
-			
 			request.setAttribute("ticket", "Front");
-
-			try {
-				request.setAttribute("categories", mDAO.getAllCategories());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
 

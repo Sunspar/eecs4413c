@@ -12,8 +12,31 @@
 	<title>Main Fragment</title>
 </head>
 <body>
-	<h1>CSE4413 Content B</h1>
-	I am B
+
+<%-- 	<c:forEach var="cat" items="${categories}">
+		<c:if test="${cat.id == itemsByCat[0].id}">
+			<c:set var="catName" value="${cat.name}"></c:set>
+		</c:if>
+	</c:forEach> --%>
+	
+	
+	
+	<h1>Food Category:</h1>
+	
+	
+	
+	<ul>
+		<c:forEach var="x" items="${categories}">
+			<li>${x.name}</li>
+		</c:forEach>
+	</ul>
+	
+	<ul>
+		<c:forEach var="x" items="${itemsByCat}">
+			<li class="e-list-item">${x.name}</li>
+		</c:forEach>
+	</ul>
+
 </body>
 </html>
 </jsp:root>
