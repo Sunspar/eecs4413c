@@ -93,8 +93,7 @@ public class FrontServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		/* Cart dispatcher */
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
@@ -108,6 +107,7 @@ public class FrontServlet extends HttpServlet {
 		} 
 		else
 		{
+
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}

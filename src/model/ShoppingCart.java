@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingCart {
 	private ArrayList<ShoppingCartItem> cartContents;
@@ -73,5 +74,9 @@ public class ShoppingCart {
 		}
 		
 		return -1;
+	}
+	
+	public List<ShoppingCartItem> getCartContents() {
+		return this.cartContents;
 	}
 }
