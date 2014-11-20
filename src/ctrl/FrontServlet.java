@@ -98,7 +98,7 @@ public class FrontServlet extends HttpServlet {
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
 			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("Cart").forward(request, response);
+			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
 		} 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category"))
 		{
