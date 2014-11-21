@@ -13,9 +13,22 @@
 	</head>
 	<body>
 		<h1> EECS4413 Shopping Cart</h1><br />
-		<c:forEach var="item" items="${cartContents}">
-			${item.name}<br />
-		</c:forEach>
+		<table>
+			<tr>
+				<td>Item Name</td>
+				<td>Price</td>
+				<td>Qty</td>
+				<td>Full Cost</td>
+			</tr>
+			<c:forEach var="item" items="${cartContents}">
+				<tr>
+					<td>${item.itemName}</td>
+					<td>${item.price}</td>
+					<td>${item.quantity}</td>
+					<td>${item.price * item.quantity}</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</body>
 </html>
 </jsp:root>

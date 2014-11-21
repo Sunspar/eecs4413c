@@ -17,7 +17,7 @@ public class ShoppingCart {
 	 * @param item The name of the item to add to the cart
 	 * @param quantity The quantity of this item that should be added to the cart
 	 */
-	public void addItemToCart(String item, int quantity) {
+	public void addItemToCart(String item, int quantity, double price) {
 		int idx = findCartItemPosition(item);
 		
 		if (idx >= 0) { // The item exists already, so lets just add to the current quantity
@@ -78,5 +78,24 @@ public class ShoppingCart {
 	
 	public List<ShoppingCartItem> getCartContents() {
 		return this.cartContents;
+	}
+	
+	/**
+	 * Returns the index'th item in the shopping cart. Returns null if index is out of bounds.
+	 * @param index an index in the current shopping cart
+	 * @return A {@link ShoppingCartItem} found at the index'th position
+	 */
+	public ShoppingCartItem getItem(int index) {
+		if (index < 0) return null;
+		if (index > this.cartContents.size()) return null;
+		return this.cartContents.get(index);
+	}
+	
+	/**
+	 * Returns the number of items in this shopping cart.
+	 * @return the amount of items in the shopping cart
+	 */
+	public int size() {
+		return this.cartContents.size();
 	}
 }
