@@ -70,7 +70,7 @@ public class ShoppingCart {
 	 */
 	private int findCartItemPosition(String itemName) {
 		for (int idx = 0; idx < this.cartContents.size(); idx++) {
-			if (this.cartContents.get(idx).getItemName().equals(itemName)) {
+			if (this.cartContents.get(idx).getName().equals(itemName)) {
 				return idx;
 			}
 		}
