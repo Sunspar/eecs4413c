@@ -1,6 +1,8 @@
 package ctrl;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -11,10 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 
 import model.DAO;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
+import model.ShoppingCartWrapper;
 
 /**
  * Servlet implementation class ShoppingCartServlet
@@ -92,6 +99,36 @@ public class ShoppingCartServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				throw new ServletException("Quantity was not a valid integer!");
 			}
+		} else if (request.getParameter(props.getProperty("SC_CHECKOUT")) != null) {
+			// User is checking out their cart.
+			/*
+			 * Steps involved in checking out the cart:
+			 * 1. Wrap the carts contents using ShoppingCartWrapper.
+			 * 2. Marshall XML file for the PO to some predetermined folder.
+			 * 3. (for now) : set target so that the user can view their link to the PO
+			 */
+			ShoppingCartWrapper wrapper = new ShoppingCartWrapper(cart.getCartContents());
+			
+			try {
+				JAXBContext jc = JAXBContext.newInstance(wrapper.getClass());
+				Marshaller marshaller = jc.createMarshaller();
+				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+				marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+				
+				StringWriter sw = new StringWriter();
+				sw.write("\n");
+				marshaller.marshal(wrapper, new StreamResult(sw));
+				  
+				System.out.println(sw.toString()); // for debugging
+				/*FileWriter fw = new FileWriter("test.xml");
+				fw.write("<?xml version='1.0'?>");
+				fw.write("<?xml-stylesheet type='text/xsl' href='SIS.xsl'?>");
+				fw.write(sw.toString());
+				fw.close();*/
+			} catch (JAXBException e) {
+				throw new ServletException("Error parsing XML for checkout!");
+			}
+			
 		}
 		
 		// Update the cart prices on whatever is left in the cart. MUST be done to show the user the most 
@@ -99,7 +136,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		try {
 			for (int idx = 0; idx < cart.size(); idx ++) {
 				ShoppingCartItem item = cart.getItem(idx);
-				item.setPrice(dao.getItemPrice(item.getItemName()));
+				item.setPrice(dao.getItemPrice(item.getName()));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
