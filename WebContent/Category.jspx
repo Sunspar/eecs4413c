@@ -33,7 +33,7 @@
 				<h6>${x.number}</h6 ><h5 align="right"><f:formatNumber type="currency" value="${x.price}"></f:formatNumber></h5>
 				<img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/>
 				<div class="cart-btn-container" align="right">
-					<button type="button" class="btn btn-default btn-sm">
+					<button type="button" class="btn btn-default btn-sm" onclick="doAddCart('${x.name}', '${pageContext.request.contextPath}');">
 	  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 					</button>
