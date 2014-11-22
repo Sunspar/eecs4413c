@@ -118,6 +118,31 @@ public class DAO {
     	return imageBlob.getBytes(0, (int) length);
     }
     
+    /**
+     * Queries for a specific item's price in the database.
+     * @param itemName The name of the item to price check.
+     * @return the price as a java double
+     * @throws SQLException if there was an issue communicating with the database
+     */
+    public double getItemPrice(String itemName) throws SQLException {
+    	double result;
+    	String queryString = "";
+    	queryString += "SELECT PRICE";
+    	queryString += " FROM ROUMANI.ITEM";
+    	queryString += " WHERE NAME= ?";
+    	
+    	Connection conn = this.ds.getConnection();
+    	PreparedStatement ps = conn.prepareStatement(queryString);
+    	ps.setString(1, itemName);
+    	ResultSet rs = ps.executeQuery();
+    	rs.next();
+    	
+    	result = rs.getDouble(1);
+    	conn.close();
+    	
+    	return result;
+    }
+    
     private int extractIntegerType(String arg) throws SQLException {
     	try {
     		return Integer.parseInt(arg);

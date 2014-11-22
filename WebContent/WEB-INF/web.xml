@@ -21,10 +21,6 @@
     <param-value>WEB-INF/classes/resources/values.properties</param-value>
   </context-param>
   <servlet>
-    <servlet-name>Cart</servlet-name>
-    <servlet-class>ctrl.CartServlet</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>Category</servlet-name>
     <servlet-class>ctrl.CategoryServlet</servlet-class>
   </servlet>

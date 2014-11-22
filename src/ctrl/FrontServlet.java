@@ -93,13 +93,12 @@ public class FrontServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		/* Cart dispatcher */
 		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
 			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("Cart").forward(request, response);
+			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
 		} 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category"))
 		{
@@ -108,6 +107,7 @@ public class FrontServlet extends HttpServlet {
 		} 
 		else
 		{
+
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
