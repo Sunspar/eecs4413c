@@ -12,9 +12,9 @@
 		<h2>The Sidebar</h2>
 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
 			<ul id="list-sidebar">
-				<li><a href="${pageContext.request.contextPath}/eFoods/">Home</a></li>
-				<li><a href="${pageContext.request.contextPath}/eFoods/Cart">Cart</a></li>
-				<li><a href="${pageContext.request.contextPath}/eFoods/B">SIS Reporting Engine</a></li>
+				<li><a href="${pageContext.request.contextPath}/">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/Cart">Cart</a></li>
+				<li><a href="${pageContext.request.contextPath}/B">SIS Reporting Engine</a></li>
 				<li><a href="">other sidebar options</a></li>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="${pageContext.request.contextPath}/eFoods/Category?id=${cat.id}">${cat.name}</a></li>

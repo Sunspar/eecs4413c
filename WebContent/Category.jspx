@@ -1,5 +1,6 @@
 <jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
 			xmlns:c="http://java.sun.com/jsp/jstl/core"  
+			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
 			version="2.0">
 	<jsp:directive.page contentType="text/html; charset=UTF-8" 
 		pageEncoding="UTF-8" session="false"/>
@@ -20,18 +21,26 @@
 	</c:forEach>
 	
 	<h1>Food Category: ${catName}</h1>
-
-	<ul>
-		<c:forEach var="x" items="${categories}">
-			<li>${x.name}</li>
-		</c:forEach>
-	</ul>
-	
-	<ul>
 		<c:forEach var="x" items="${itemsByCat}">
-			<li class="e-list-item">${x.name}</li>
+			<div class="e-list-item">
+				<!--  <span class="li-qty">
+					<button type="button" class="btn btn-default btn-sm">
+  						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
+				<span class="li-content">${x.name}</span>-->
+				<h4>${x.name}</h4>
+				<h6>${x.number}</h6 ><h5 align="right"><f:formatNumber type="currency" value="${x.price}"></f:formatNumber></h5>
+				<img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/>
+				<div class="cart-btn-container" align="right">
+					<button type="button" class="btn btn-default btn-sm">
+	  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
 		</c:forEach>
-	</ul>
+
 
 </body>
 </html>

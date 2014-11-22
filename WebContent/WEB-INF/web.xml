@@ -29,15 +29,15 @@
     <servlet-class>ctrl.CategoryServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>LoginServlet</servlet-name>
-  	<servlet-class>ctrl.LoginServlet</servlet-class>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>ctrl.LoginServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>ImageServlet</servlet-name>
-  	<servlet-class>ctrl.ImageServlet</servlet-class>
+    <servlet-name>ImageServlet</servlet-name>
+    <servlet-class>ctrl.ImageServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>ShoppingCartServlet</servlet-name>
-  	<servlet-class>ctrl.ShoppingCartServlet</servlet-class>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <servlet-class>ctrl.ShoppingCartServlet</servlet-class>
   </servlet>
 </web-app>
