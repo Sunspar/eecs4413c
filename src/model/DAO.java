@@ -77,7 +77,7 @@ public class DAO {
 	}
 	
 	/**
-	 * Queries the database for a list of items by Category
+	 * Queries the database for a list of items based on search queries
 	 * 
 	 * @return A list of {@link ItemBean}s related to search query.
 	 * @throws SQLException if there was an error communicating with the database
@@ -111,6 +111,40 @@ public class DAO {
 		return result;
 	}
 	
+	/**
+	 * Queries the database for an item
+	 * 
+	 * @return An {@link ItemBean} to input name and number
+	 * @throws SQLException if there was an error communicating with the database
+	 */
+	public ItemBean getItem(String name, String number) throws SQLException {
+		ItemBean result = null;
+		Connection conn = this.ds.getConnection();
+		
+		String queryString = "";
+		queryString += "SELECT *";
+		queryString += " FROM ROUMANI.ITEM WHERE LOWER(NAME) LIKE LOWER(?) AND NUMBER LIKE ?" ;
+		
+		PreparedStatement ps = conn.prepareStatement(queryString);
+		ps.setString(1, name);
+		ps.setString(2, number);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			result = new ItemBean(rs.getString("unit"), 
+					rs.getDouble("costPrice"), 
+					rs.getInt("supID"), 
+					rs.getInt("catID"), 
+					rs.getInt("reorder"), 
+					rs.getInt("onorder"), 
+					rs.getInt("qty"), 
+					rs.getDouble("price"), 
+					rs.getString("name"), 
+					rs.getString("number"));
+		}
+		return result;
+	}
 	
 	
 	/**

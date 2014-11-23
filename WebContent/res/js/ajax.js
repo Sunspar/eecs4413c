@@ -1,5 +1,5 @@
 // Source: http://www.w3schools.com/ajax/
-function doAddCart(item, path, object)
+function doAddCart(itemName, itemID, path, object)
 {
 	var $this = object;
 	var xmlhttp;
@@ -21,7 +21,7 @@ function doAddCart(item, path, object)
 		}
 	}
 	
-	xmlhttp.open("POST", path + "/e/Cart?add=" + item,true);
+	xmlhttp.open("POST", path + "/e/Cart?addName=" + itemName + "&addID=" + itemID ,true);
 	xmlhttp.send();
 	
 	

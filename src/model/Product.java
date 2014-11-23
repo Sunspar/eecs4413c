@@ -1,5 +1,6 @@
 package model;
 
+import java.security.InvalidParameterException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,6 +30,18 @@ public class Product {
 		}
 		list = mDAO.getItemsBySearch(query);
 		return list;
+	}
+	
+	public ItemBean getItem(String name, String number) throws Exception {
+		ItemBean item = null;
+		if (name.equals("") || number.equals("")) {
+			throw new InvalidParameterException("Invalid parameters!");
+		}
+		item = mDAO.getItem(name, number);
+		if (item == null) {
+			throw new InvalidParameterException("Item does not exist!");
+		}
+		return item;
 	}
 	
 	 /** Parse function **/
