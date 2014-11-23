@@ -1,5 +1,6 @@
 package ctrl;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -18,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamResult;
 
+import model.CustomerBean;
 import model.DAO;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
@@ -65,9 +67,10 @@ public class ShoppingCartServlet extends HttpServlet {
 			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
 			 * I restarted the server. Should definitely remove this afterwards...
 			 */
-			cart.addItemToCart("Minced Rib Meat by VX", "1");
-			cart.addItemToCart("J0 Chicken Meat", "5");
-			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "12");
+			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
+			cart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
+			cart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
+			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
 			/* ----- DEMO DATA ENDS ----- */
 		}
 		
@@ -107,7 +110,8 @@ public class ShoppingCartServlet extends HttpServlet {
 			 * 2. Marshall XML file for the PO to some predetermined folder.
 			 * 3. (for now) : set target so that the user can view their link to the PO
 			 */
-			ShoppingCartWrapper wrapper = new ShoppingCartWrapper(cart.getCartContents());
+			CustomerBean customer = (CustomerBean) session.getAttribute(props.getProperty("INTERNAL_CUSTOMER"));
+			ShoppingCartWrapper wrapper = new ShoppingCartWrapper(customer, cart.getCartContents());
 			
 			try {
 				JAXBContext jc = JAXBContext.newInstance(wrapper.getClass());
@@ -120,11 +124,16 @@ public class ShoppingCartServlet extends HttpServlet {
 				marshaller.marshal(wrapper, new StreamResult(sw));
 				  
 				System.out.println(sw.toString()); // for debugging
-				/*FileWriter fw = new FileWriter("test.xml");
+				String rootFolder = props.getProperty("SC_PO_ROOT_FOLDER");
+				String poFilename = "test.xml";
+				String poFileLocation = ctx.getRealPath(rootFolder + File.separator + poFilename);
+				FileWriter fw = new FileWriter(poFileLocation);
 				fw.write("<?xml version='1.0'?>");
-				fw.write("<?xml-stylesheet type='text/xsl' href='SIS.xsl'?>");
+				fw.write("<?xml-stylesheet type='text/xsl' href='PO.xsl'?>");
 				fw.write(sw.toString());
-				fw.close();*/
+				fw.close();
+				
+				cart.empty();
 			} catch (JAXBException e) {
 				throw new ServletException("Error parsing XML for checkout!");
 			}
