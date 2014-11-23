@@ -95,19 +95,16 @@ public class FrontServlet extends HttpServlet {
 		}
 
 		/* Cart dispatcher */
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
-		{
+		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart")) {
 			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
-		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category"))
-		{
+			ctx.getNamedDispatcher("ShoppingCartServlet").forward(request, response);
+		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category")) {
 			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("Category").forward(request, response);
-		} 
-		else
-		{
-
+			ctx.getNamedDispatcher("Category").forward(request, response);
+		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login")) {
+			request.setAttribute("ticket", "F-to-Login");
+			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
+		} else {
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
