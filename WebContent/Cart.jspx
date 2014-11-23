@@ -21,7 +21,7 @@
 				<td>Full Cost</td>
 			</tr>
 			<c:if test="${not empty cartContents}">
-				<form action="${pageContext.request.contextPath}/eFoods/Cart" method="POST">
+				<form action="${pageContext.request.contextPath}/e/Cart" method="POST">
 					<button type="submit" name="updateQuantities">Update Cart</button>
 					<button type="submit" name="checkout">Checkout Cart</button>
 					<c:forEach var="item" items="${cartContents}" varStatus="loop">

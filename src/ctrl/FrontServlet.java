@@ -1,6 +1,7 @@
 package ctrl;
 
 import model.DAO;
+import model.Product;
 import model.ShoppingCart;
 
 import javax.naming.NamingException;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @WebServlet(
 		name = "Front Servlet for Foods R Us",
-		urlPatterns = { "/eFoods", "/eFoods/*" }
+		urlPatterns = { "/e/*", "/eFoods", "/eFoods/*" }
 )
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +57,12 @@ public class FrontServlet extends HttpServlet {
                     properties.getProperty("INTERNAL_DAO"),
                     new DAO()
             );
+            
+            // Save main product model
+            getServletContext().setAttribute(
+                    "main",
+                    new Product()
+            );
 			
 		} catch (IOException | NamingException e) {
 			throw new ServletException(e.getMessage(), e.getCause());
@@ -87,24 +94,28 @@ public class FrontServlet extends HttpServlet {
 		System.out.println("In Front--finish *****************\n");
 		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
 		
-		DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
+		//DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
+		Product mProduct = (Product) getServletContext().getAttribute("main");
+		
 		try {
-			request.setAttribute("categories", mDAO.getAllCategories());
+			request.setAttribute("categories", mProduct.getAllCategories());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		/* Cart dispatcher */
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
+		if ((request.getPathInfo() != null && request.getPathInfo().equals("/Search")) 
+				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Category")))
+		{
+			request.setAttribute("ticket", "F-to-Cart");
+			this.getServletContext().getNamedDispatcher("Product").forward(request, response);
+		} 
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{
 			request.setAttribute("ticket", "F-to-Cart");
 			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
 		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category"))
-		{
-			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("Category").forward(request, response);
-		} 
+		
 		else
 		{
 

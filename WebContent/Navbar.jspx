@@ -9,9 +9,9 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-		<form class="search" action="" method="post">
-			<input class="search-field" type="text" name="search-query"  placeholder="Type in search terms i.e. Milk" />
-			<button class="search-btn" type="submit" name="search-submit">
+		<form class="search" action="${pageContext.request.contextPath}/e/Search" method="GET">
+			<input class="search-field" type="text" name="query"  placeholder="Type in search terms i.e. Milk" />
+			<button class="search-btn" type="submit" name="submit" value="true">
 				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 			</button>
 		</form>
@@ -20,7 +20,7 @@
 		<div class="row subnav">
 			<div class="col-md-9">
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/e/">Home</a></li>
 				<li><a href="A">Mortgage Calculator</a></li>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="#">${cat.name}</a></li>
