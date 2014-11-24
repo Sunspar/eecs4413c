@@ -21,11 +21,12 @@
 				<td>Full Cost</td>
 			</tr>
 			<c:if test="${not empty cartContents}">
-				<form action="${pageContext.request.contextPath}/eFoods/Cart" method="POST">
+				<form action="${pageContext.request.contextPath}/e/Cart" method="POST">
 					<button type="submit" name="updateQuantities">Update Cart</button>
+					<button type="submit" name="checkout">Checkout Cart</button>
 					<c:forEach var="item" items="${cartContents}" varStatus="loop">
 							<tr>
-								<td><label name="itemName${loop.index}">${item.itemName}</label></td>
+								<td><label name="itemName${loop.index}">${item.name}</label></td>
 								<td>${item.price}</td>
 								<td> <input name="itemQuantity${loop.index}" type="text" value="${item.quantity}"/></td>
 								<td>${item.price * item.quantity}</td>

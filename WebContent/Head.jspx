@@ -8,10 +8,7 @@
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<title>Hfragment</title>
-</head>
-<body>
+
 	
 	<h1 class="eFoods">eFoods</h1>
 	<div class="sub-container">
@@ -21,6 +18,5 @@
 	</div>
 	<!--  Phone = ${param.phone}
 	Ticket = ${ticket} -->
-</body>
 </html>
 </jsp:root>

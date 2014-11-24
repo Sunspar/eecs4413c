@@ -1,6 +1,10 @@
 package ctrl;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -11,10 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 
+import model.CustomerBean;
 import model.DAO;
+import model.Product;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
+import model.ShoppingCartWrapper;
 
 /**
  * Servlet implementation class ShoppingCartServlet
@@ -41,10 +52,15 @@ public class ShoppingCartServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Flag to see if action is external to shopping cart JSP 
+		boolean isExternalAction = false;
+		
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		HttpSession session = request.getSession();
 		DAO dao = (DAO) ctx.getAttribute(props.getProperty("INTERNAL_DAO"));
+		
+		Product mProduct = (Product) ctx.getAttribute("main");
 		
 		// Ensure we have a valid cart -- use session variable, or make one if it doesn't exist yet
 		ShoppingCart cart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
@@ -58,9 +74,10 @@ public class ShoppingCartServlet extends HttpServlet {
 			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
 			 * I restarted the server. Should definitely remove this afterwards...
 			 */
-			cart.addItemToCart("Minced Rib Meat by VX", "1");
-			cart.addItemToCart("J0 Chicken Meat", "5");
-			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "12");
+			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
+			cart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
+			cart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
+			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
 			/* ----- DEMO DATA ENDS ----- */
 		}
 		
@@ -92,6 +109,60 @@ public class ShoppingCartServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				throw new ServletException("Quantity was not a valid integer!");
 			}
+		} else if (request.getParameter(props.getProperty("SC_CHECKOUT")) != null) {
+			// User is checking out their cart.
+			/*
+			 * Steps involved in checking out the cart:
+			 * 1. Wrap the carts contents using ShoppingCartWrapper.
+			 * 2. Marshall XML file for the PO to some predetermined folder.
+			 * 3. (for now) : set target so that the user can view their link to the PO
+			 */
+			CustomerBean customer = (CustomerBean) session.getAttribute(props.getProperty("INTERNAL_CUSTOMER"));
+			ShoppingCartWrapper wrapper = new ShoppingCartWrapper(customer, cart.getCartContents());
+			
+			try {
+				JAXBContext jc = JAXBContext.newInstance(wrapper.getClass());
+				Marshaller marshaller = jc.createMarshaller();
+				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+				marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+				
+				StringWriter sw = new StringWriter();
+				sw.write("\n");
+				marshaller.marshal(wrapper, new StreamResult(sw));
+				  
+				System.out.println(sw.toString()); // for debugging
+				String rootFolder = props.getProperty("SC_PO_ROOT_FOLDER");
+				String poFilename = "test.xml";
+				String poFileLocation = ctx.getRealPath(rootFolder + File.separator + poFilename);
+				FileWriter fw = new FileWriter(poFileLocation);
+				fw.write("<?xml version='1.0'?>");
+				fw.write("<?xml-stylesheet type='text/xsl' href='PO.xsl'?>");
+				fw.write(sw.toString());
+				fw.close();
+				
+				cart.empty();
+			} catch (JAXBException e) {
+				throw new ServletException("Error parsing XML for checkout!");
+			}
+			
+		} else if ((request.getParameter("addName") != null) && (request.getParameter("addID") != null) ) {
+			String itemName = request.getParameter("addName");
+			String itemID = request.getParameter("addID");
+			isExternalAction = true;
+			
+			// Server response
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			
+			try {
+				mProduct.getItem(itemName, itemID);
+				cart.addItemToCart(itemName, itemID, "1");
+				System.out.println("[ShoppingCartServlet]: Reached!");
+				out.write("Server says: add successful\nTo add:" + itemName);
+			} catch (Exception e) {
+				//e.printStackTrace();
+				out.write("Server says: add failed\nNo such item:" + itemName);
+			}
 		}
 		
 		// Update the cart prices on whatever is left in the cart. MUST be done to show the user the most 
@@ -99,15 +170,17 @@ public class ShoppingCartServlet extends HttpServlet {
 		try {
 			for (int idx = 0; idx < cart.size(); idx ++) {
 				ShoppingCartItem item = cart.getItem(idx);
-				item.setPrice(dao.getItemPrice(item.getItemName()));
+				item.setPrice(dao.getItemPrice(item.getName()));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
-		request.setAttribute("target", "/Cart.jspx");
-		request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		if (!isExternalAction) {
+			request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
+			request.setAttribute("target", "/Cart.jspx");
+			request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		}
 	}
 
 }

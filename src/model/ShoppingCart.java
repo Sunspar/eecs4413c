@@ -18,7 +18,7 @@ public class ShoppingCart {
 	 * @param quantity The quantity of this item that should be added to the cart
 	 * @throws IllegalArgumentException if the quantity was not a valid integer
 	 */
-	public void addItemToCart(String item, String quantity) throws IllegalArgumentException{
+	public void addItemToCart(String item, String number, String quantity) throws IllegalArgumentException{
 		int idx = findCartItemPosition(item);
 		int qty = extractIntegerType(quantity);
 		
@@ -26,7 +26,7 @@ public class ShoppingCart {
 			ShoppingCartItem cartItem = this.cartContents.get(idx);
 			cartItem.setQuantity(cartItem.getQuantity() + qty);
 		} else { // The item doesnt exist, so lets just add it to the cart
-			this.cartContents.add(new ShoppingCartItem(item, qty));
+			this.cartContents.add(new ShoppingCartItem(item, number, qty));
 		}
 	}
 	
@@ -70,7 +70,7 @@ public class ShoppingCart {
 	 */
 	private int findCartItemPosition(String itemName) {
 		for (int idx = 0; idx < this.cartContents.size(); idx++) {
-			if (this.cartContents.get(idx).getItemName().equals(itemName)) {
+			if (this.cartContents.get(idx).getName().equals(itemName)) {
 				return idx;
 			}
 		}
@@ -99,6 +99,13 @@ public class ShoppingCart {
 	 */
 	public int size() {
 		return this.cartContents.size();
+	}
+	
+	/**
+	 * Empties out the shopping cart.
+	 */
+	public void empty() {
+		this.cartContents = new ArrayList<ShoppingCartItem>();
 	}
 	
 	/**
