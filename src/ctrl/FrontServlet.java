@@ -52,15 +52,9 @@ public class FrontServlet extends HttpServlet {
 					properties	
 			);
 
-            // Save the DAO for various servlets to use
-            getServletContext().setAttribute(
-                    properties.getProperty("INTERNAL_DAO"),
-                    new DAO()
-            );
-            
             // Save main product model
             getServletContext().setAttribute(
-                    "main",
+                    properties.getProperty("MAIN_MODEL"),
                     new Product()
             );
 			
@@ -84,20 +78,7 @@ public class FrontServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String targetPage = ""; // WE DONT KNOW YET GOSH.
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
-		String testVal = props.getProperty("INTERNAL_DAO");
-		
-		// Debug info at the start of front servlet
-		System.out.println("In Front--begin: *****************");
-		System.out.println("url = " + request.getRequestURL());
-		System.out.println("uri = " + request.getRequestURI());
-		System.out.println("pth = " + request.getPathInfo());
-		System.out.println("In Front--finish *****************\n");
-		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
-		
-		
-		// I'll keep this here but we should remove this soon
-		DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
-		Product mProduct = (Product) getServletContext().getAttribute("main");
+		Product mProduct = (Product) getServletContext().getAttribute(props.getProperty("MAIN_MODEL"));
 		
 		try {
 			request.setAttribute("categories", mProduct.getAllCategories());
@@ -110,7 +91,7 @@ public class FrontServlet extends HttpServlet {
 				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Category")))
 		{
 			request.setAttribute("ticket", "F-to-Cart");
-			this.getServletContext().getNamedDispatcher("Product").forward(request, response);
+			this.getServletContext().getNamedDispatcher("ProductServlet").forward(request, response);
 		} 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
 		{

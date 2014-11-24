@@ -36,8 +36,7 @@ public class ProductServlet extends HttpServlet {
 		
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
-		//DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
-		Product mProduct = (Product) getServletContext().getAttribute("main");
+		Product mProduct = (Product) getServletContext().getAttribute(props.getProperty("MAIN_MODEL"));
 		
 		if ( request.getParameter("id") != null ) {
 			String id = (String) request.getParameter("id");

@@ -21,7 +21,7 @@
     <url-pattern>/FrontServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Product</servlet-name>
+    <servlet-name>ProductServlet</servlet-name>
     <servlet-class>ctrl.ProductServlet</servlet-class>
   </servlet>
   <servlet>

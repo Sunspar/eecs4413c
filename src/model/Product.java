@@ -59,5 +59,9 @@ public class Product {
 		List<CategoryBean> list = mDAO.getAllCategories();
 		return list;
 	}
+    
+    public double getItemPrice(String itemName) throws SQLException {
+    	return mDAO.getItemPrice(itemName);
+    }
 
 }

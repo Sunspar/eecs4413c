@@ -58,9 +58,8 @@ public class ShoppingCartServlet extends HttpServlet {
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		HttpSession session = request.getSession();
-		DAO dao = (DAO) ctx.getAttribute(props.getProperty("INTERNAL_DAO"));
 		
-		Product mProduct = (Product) ctx.getAttribute("main");
+		Product mProduct = (Product) ctx.getAttribute(props.getProperty("MAIN_MODEL"));
 		
 		// Ensure we have a valid cart -- use session variable, or make one if it doesn't exist yet
 		ShoppingCart cart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
@@ -170,7 +169,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		try {
 			for (int idx = 0; idx < cart.size(); idx ++) {
 				ShoppingCartItem item = cart.getItem(idx);
-				item.setPrice(dao.getItemPrice(item.getName()));
+				item.setPrice(mProduct.getItemPrice(item.getName()));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

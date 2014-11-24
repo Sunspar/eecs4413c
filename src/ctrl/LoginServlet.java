@@ -22,11 +22,15 @@ public class LoginServlet extends HttpServlet {
 		try {
 			URL url = new URL("http://www.cse.yorku.ca/~cse03257/auth.cgi");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36");
+			
 			String userpass = "andrew:andrew";
 			String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userpass.getBytes());
 			connection.setRequestProperty("Authorization", basicAuth);
+			connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.01");
+			connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+			connection.setRequestProperty("User-Agent", "eFoods Login Servlet");
+			connection.setRequestProperty("Content-Length", "0");
+			connection.setRequestProperty("Content-Type", "text/html");
 			int rc = connection.getResponseCode();
 			
 			StringBuffer authResponse = new StringBuffer();
