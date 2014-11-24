@@ -1,6 +1,7 @@
 package ctrl;
 
 import model.DAO;
+import model.Product;
 import model.ShoppingCart;
 
 import javax.naming.NamingException;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @WebServlet(
 		name = "Front Servlet for Foods R Us",
-		urlPatterns = { "/eFoods", "/eFoods/*" }
+		urlPatterns = { "/e/*", "/eFoods", "/eFoods/*" }
 )
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -51,10 +52,10 @@ public class FrontServlet extends HttpServlet {
 					properties	
 			);
 
-            // Save the DAO for various servlets to use
+            // Save main product model
             getServletContext().setAttribute(
-                    properties.getProperty("INTERNAL_DAO"),
-                    new DAO()
+                    properties.getProperty("MAIN_MODEL"),
+                    new Product()
             );
 			
 		} catch (IOException | NamingException e) {
@@ -77,34 +78,33 @@ public class FrontServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String targetPage = ""; // WE DONT KNOW YET GOSH.
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
-		String testVal = props.getProperty("INTERNAL_DAO");
+		Product mProduct = (Product) getServletContext().getAttribute(props.getProperty("MAIN_MODEL"));
 		
-		// Debug info at the start of front servlet
-		System.out.println("In Front--begin: *****************");
-		System.out.println("url = " + request.getRequestURL());
-		System.out.println("uri = " + request.getRequestURI());
-		System.out.println("pth = " + request.getPathInfo());
-		System.out.println("In Front--finish *****************\n");
-		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
-		
-		DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
 		try {
-			request.setAttribute("categories", mDAO.getAllCategories());
+			request.setAttribute("categories", mProduct.getAllCategories());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		/* Cart dispatcher */
-		if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart")) {
+		if ((request.getPathInfo() != null && request.getPathInfo().equals("/Search")) 
+				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Category")))
+		{
 			request.setAttribute("ticket", "F-to-Cart");
-			ctx.getNamedDispatcher("ShoppingCartServlet").forward(request, response);
-		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Category")) {
+			this.getServletContext().getNamedDispatcher("ProductServlet").forward(request, response);
+		} 
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
+		{
 			request.setAttribute("ticket", "F-to-Cart");
-			ctx.getNamedDispatcher("Category").forward(request, response);
-		} else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login")) {
+			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
+		} 
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login")) {
 			request.setAttribute("ticket", "F-to-Login");
 			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
-		} else {
+		} 
+		else
+		{
+
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}

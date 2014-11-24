@@ -47,7 +47,7 @@ public class DAO {
 	 * @return A list of {@link ItemBean}s, containing all items by category in the database
 	 * @throws SQLException if there was an error communicating with the database
 	 */
-	public List<ItemBean> getItemsByCategory(String id) throws SQLException {
+	public List<ItemBean> getItemsByCategory(int id) throws SQLException {
 		List<ItemBean> result = new ArrayList<ItemBean>();
 		Connection conn = this.ds.getConnection();
 		
@@ -56,7 +56,7 @@ public class DAO {
 		queryString += " FROM ROUMANI.ITEM WHERE CATID=?" ;
 		
 		PreparedStatement ps = conn.prepareStatement(queryString);
-		ps.setInt(1, this.extractID(id));
+		ps.setInt(1, id);
 		
 		ResultSet rs = ps.executeQuery();
 		
@@ -75,6 +75,77 @@ public class DAO {
 		}
 		return result;
 	}
+	
+	/**
+	 * Queries the database for a list of items based on search queries
+	 * 
+	 * @return A list of {@link ItemBean}s related to search query.
+	 * @throws SQLException if there was an error communicating with the database
+	 */
+	public List<ItemBean> getItemsBySearch(String query) throws SQLException {
+		List<ItemBean> result = new ArrayList<ItemBean>();
+		Connection conn = this.ds.getConnection();
+		
+		String queryString = "";
+		queryString += "SELECT *";
+		queryString += " FROM ROUMANI.ITEM WHERE LOWER(NAME) LIKE LOWER(?)" ;
+		
+		PreparedStatement ps = conn.prepareStatement(queryString);
+		ps.setString(1, "%" + query + "%");
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			ItemBean item = new ItemBean(rs.getString("unit"), 
+					rs.getDouble("costPrice"), 
+					rs.getInt("supID"), 
+					rs.getInt("catID"), 
+					rs.getInt("reorder"), 
+					rs.getInt("onorder"), 
+					rs.getInt("qty"), 
+					rs.getDouble("price"), 
+					rs.getString("name"), 
+					rs.getString("number"));
+			result.add(item);
+		}
+		return result;
+	}
+	
+	/**
+	 * Queries the database for an item
+	 * 
+	 * @return An {@link ItemBean} to input name and number
+	 * @throws SQLException if there was an error communicating with the database
+	 */
+	public ItemBean getItem(String name, String number) throws SQLException {
+		ItemBean result = null;
+		Connection conn = this.ds.getConnection();
+		
+		String queryString = "";
+		queryString += "SELECT *";
+		queryString += " FROM ROUMANI.ITEM WHERE LOWER(NAME) LIKE LOWER(?) AND NUMBER LIKE ?" ;
+		
+		PreparedStatement ps = conn.prepareStatement(queryString);
+		ps.setString(1, name);
+		ps.setString(2, number);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			result = new ItemBean(rs.getString("unit"), 
+					rs.getDouble("costPrice"), 
+					rs.getInt("supID"), 
+					rs.getInt("catID"), 
+					rs.getInt("reorder"), 
+					rs.getInt("onorder"), 
+					rs.getInt("qty"), 
+					rs.getDouble("price"), 
+					rs.getString("name"), 
+					rs.getString("number"));
+		}
+		return result;
+	}
+	
 	
 	/**
 	 * Queries the database for the list of categories.
@@ -149,19 +220,6 @@ public class DAO {
     	} catch (NumberFormatException e) {
     		throw new SQLException(e.getMessage(), e.getCause());
     	}
-    }
-    
-    
-    /** Parse function **/
-    private int extractID(String id) throws IllegalArgumentException {
-    	int result = 0;
-    	
-    	try {
-			result = Integer.parseInt(id);
-		} catch (Exception e) {
-			throw new IllegalArgumentException("ID not an int!");
-		}
-		return result;
     }
     
 }

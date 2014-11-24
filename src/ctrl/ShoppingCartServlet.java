@@ -3,6 +3,7 @@ package ctrl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import model.CustomerBean;
 import model.DAO;
+import model.Product;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
 import model.ShoppingCartWrapper;
@@ -50,10 +52,14 @@ public class ShoppingCartServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Flag to see if action is external to shopping cart JSP 
+		boolean isExternalAction = false;
+		
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		HttpSession session = request.getSession();
-		DAO dao = (DAO) ctx.getAttribute(props.getProperty("INTERNAL_DAO"));
+		
+		Product mProduct = (Product) ctx.getAttribute(props.getProperty("MAIN_MODEL"));
 		
 		// Ensure we have a valid cart -- use session variable, or make one if it doesn't exist yet
 		ShoppingCart cart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
@@ -138,6 +144,24 @@ public class ShoppingCartServlet extends HttpServlet {
 				throw new ServletException("Error parsing XML for checkout!");
 			}
 			
+		} else if ((request.getParameter("addName") != null) && (request.getParameter("addID") != null) ) {
+			String itemName = request.getParameter("addName");
+			String itemID = request.getParameter("addID");
+			isExternalAction = true;
+			
+			// Server response
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			
+			try {
+				mProduct.getItem(itemName, itemID);
+				cart.addItemToCart(itemName, itemID, "1");
+				System.out.println("[ShoppingCartServlet]: Reached!");
+				out.write("Server says: add successful\nTo add:" + itemName);
+			} catch (Exception e) {
+				//e.printStackTrace();
+				out.write("Server says: add failed\nNo such item:" + itemName);
+			}
 		}
 		
 		// Update the cart prices on whatever is left in the cart. MUST be done to show the user the most 
@@ -145,15 +169,17 @@ public class ShoppingCartServlet extends HttpServlet {
 		try {
 			for (int idx = 0; idx < cart.size(); idx ++) {
 				ShoppingCartItem item = cart.getItem(idx);
-				item.setPrice(dao.getItemPrice(item.getName()));
+				item.setPrice(mProduct.getItemPrice(item.getName()));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
-		request.setAttribute("target", "/Cart.jspx");
-		request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		if (!isExternalAction) {
+			request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
+			request.setAttribute("target", "/Cart.jspx");
+			request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		}
 	}
 
 }
