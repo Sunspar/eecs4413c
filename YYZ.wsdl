@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" xmlns:intf="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.2.1
+Built on Jun 14, 2005 (09:15:57 EDT)-->
+
+   <wsdl:message name="orderRequest">
+
+      <wsdl:part name="itemNumber" type="xsd:string"/>
+
+      <wsdl:part name="quantity" type="xsd:int"/>
+
+      <wsdl:part name="key" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="quoteResponse">
+
+      <wsdl:part name="quoteReturn" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getNameRequest">
+
+      <wsdl:part name="itemNumber" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUnitResponse">
+
+      <wsdl:part name="getUnitReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="orderResponse">
+
+      <wsdl:part name="orderReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="quoteRequest">
+
+      <wsdl:part name="itemNumber" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getNameResponse">
+
+      <wsdl:part name="getNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUnitRequest">
+
+      <wsdl:part name="itemNumber" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="YYZ">
+
+      <wsdl:operation name="getUnit" parameterOrder="itemNumber">
+
+         <wsdl:input message="impl:getUnitRequest" name="getUnitRequest"/>
+
+         <wsdl:output message="impl:getUnitResponse" name="getUnitResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getName" parameterOrder="itemNumber">
+
+         <wsdl:input message="impl:getNameRequest" name="getNameRequest"/>
+
+         <wsdl:output message="impl:getNameResponse" name="getNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="order" parameterOrder="itemNumber quantity key">
+
+         <wsdl:input message="impl:orderRequest" name="orderRequest"/>
+
+         <wsdl:output message="impl:orderResponse" name="orderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="quote" parameterOrder="itemNumber">
+
+         <wsdl:input message="impl:quoteRequest" name="quoteRequest"/>
+
+         <wsdl:output message="impl:quoteResponse" name="quoteResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="YYZSoapBinding" type="impl:YYZ">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getUnit">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUnitRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUnitResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="order">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="orderRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="orderResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="quote">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="quoteRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="quoteResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="YYZService">
+
+      <wsdl:port binding="impl:YYZSoapBinding" name="YYZ">
+
+         <wsdlsoap:address location="http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
