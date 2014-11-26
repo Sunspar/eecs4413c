@@ -34,7 +34,7 @@
   				
   				<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">${sessionScope.cse}Sign In</a>
   				&#160;
-  				<a href="#" alt="#" class="user">Register</a>
+  				<a href="#" alt="#" class="user">Register</a><c:out value="${sessionScope.name}"/>
   			</div>
 		</div>
 		
