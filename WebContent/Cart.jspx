@@ -1,5 +1,6 @@
 <jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
 			xmlns:c="http://java.sun.com/jsp/jstl/core"  
+			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
 			version="2.0">
 	<jsp:directive.page contentType="text/html; charset=UTF-8" 
 		pageEncoding="UTF-8" session="false"/>
@@ -29,7 +30,8 @@
 								<td><label name="itemName${loop.index}">${item.name}</label></td>
 								<td>${item.price}</td>
 								<td> <input name="itemQuantity${loop.index}" type="text" value="${item.quantity}"/></td>
-								<td>${item.price * item.quantity}</td>
+								<c:set target="${item.price * item.quantity}" var="mPrice"></c:set>
+								<td><f:formatNumber type="currency" value="${mPrice}"></f:formatNumber></td>
 							</tr>
 					</c:forEach>
 				</form>

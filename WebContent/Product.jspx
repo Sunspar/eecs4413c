@@ -34,8 +34,6 @@
 					<h1>Search Results for: ${query}</h1>
 				</c:when>
 			</c:choose>
-				
-			
 				<c:forEach var="x" items="${itemsByCat}">
 					<div class="e-list-item">
 						<!--  <span class="li-qty">
@@ -46,9 +44,14 @@
 						<span class="li-content">${x.name}</span>-->
 						<h4>${x.name}</h4>
 						<h6>${x.number}</h6 ><h5 align="right"><f:formatNumber type="currency" value="${x.price}"></f:formatNumber></h5>
-						<img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/>
+						<div class="product-img-container">
+							<div class="add-splash" id="splash-${x.number}">
+								Added to Cart!
+							</div>
+							<img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/>
+						</div>
 						<div class="cart-btn-container" align="right">
-							<button type="button" class="btn btn-default btn-sm" onclick="doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
+							<button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${x.number}'); doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
 			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 							</button>

@@ -9,17 +9,27 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-		<h2>The Sidebar</h2>
-			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+		<!-- <h2>The Sidebar</h2> -->
 			<ul id="list-sidebar">
-				<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-				<li><a href="${pageContext.request.contextPath}/e/Cart">Cart</a></li>
-				<li><a href="${pageContext.request.contextPath}/e/B">SIS Reporting Engine</a></li>
-				<li><a href="">other sidebar options</a></li>
+				<li>
+					<a href="${pageContext.request.contextPath}/">
+						<span class="glyphicon glyphicon-home"></span>
+						<span class="text-link">Home</span>
+					</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath}/e/Cart">
+							<span class="glyphicon glyphicon-shopping-cart"></span>
+							<span class="text-link">Cart</span>
+					</a>
+				</li>
 				<c:forEach items="${categories}" var="cat">
-					<li><a href="${pageContext.request.contextPath}/e/Category?id=${cat.id}">${cat.name}</a></li>
+					<li><a href="${pageContext.request.contextPath}/e/Category?id=${cat.id}">
+							<span class="flaticon-${cat.id}"></span><span class="text-link">${cat.name}</span>
+						</a>
+					</li>
 				</c:forEach>
-		</ul>
+			</ul>
 
 </html>
 </jsp:root>

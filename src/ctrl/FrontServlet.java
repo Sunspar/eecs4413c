@@ -25,10 +25,16 @@ import java.util.Properties;
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
     public FrontServlet() {
         super();
     }
 
+	/**
+	 * @see javax.servlet.Servlet#init()
+	 */
     @Override
 	public void init() throws ServletException {
 		super.init();
@@ -45,7 +51,7 @@ public class FrontServlet extends HttpServlet {
 					getServletContext().getInitParameter("PROPERTIES"),
 					properties	
 			);
-
+ 
             // Save main product model
             getServletContext().setAttribute(
                     properties.getProperty("MAIN_MODEL"),
@@ -57,6 +63,9 @@ public class FrontServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -101,5 +110,7 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
+
 	}
+
 }

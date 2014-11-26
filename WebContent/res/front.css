@@ -201,11 +201,39 @@ h2
 }
 
 ul#list-sidebar {
+	padding: 0;
 	list-style: none;
+	margin-top: 10px;
+	width: 100%;
+}
+
+ul#list-sidebar li {
+	width: 100%;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 ul#list-sidebar li a {
+	padding: 5px;
+	display: inline-block;
+	width: 100%;
+	font-size: 1.2em;
 	color: #d35400;
+	-webkit-transition: all 0.2s ease-in-out;
+}
+
+ul#list-sidebar li a:hover {
+	width: 100%;
+	padding-left: 10px;
+	font-size: 1.2em;
+	color: #f57557;
+	background-color: #98efcb;
+}
+
+ul#list-sidebar li a .text-link {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  	font-size: 1.1em;
+  	line-height: 1.42857143;
+	margin-left: 15px;
 }
 
 #footer {
@@ -249,3 +277,29 @@ div.cart-btn-container > button > span {
 	font-size: 1em;
 }
 
+
+/* Product Image */
+div.product-img-container {
+	position: relative;
+}
+
+div.add-splash {
+	text-align: center;
+	position: absolute;
+	font-size: 1.5em;
+	color: #f48a4c;
+	left: 2px;
+	right: 2px;
+	top: 2px;
+	bottom: 2px;
+	padding-top: 50%;
+	opacity: 0.0;
+	font-weight: bold;
+	background-color: white;
+	-webkit-transition: all 0.25s ease-in;
+}
+
+div.fadeIn {
+	opacity: 1;
+	padding-top: 40%;
+}
