@@ -31,10 +31,18 @@
   				<span class="glyphicon glyphicon-shopping-cart user">&#160;</span>
   				<span class="glyphicon glyphicon-user user">&#160;</span>
   				
+  				<c:choose>
+				      <c:when test="${not empty name}">
+				      		Hello <c:out value="${name}"/>!
+				      </c:when>
+				
+				      <c:otherwise>
+							<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">Sign In</a>
+			  				&#160;
+			  				<a href="#" alt="#" class="user">Register</a>
+				      </c:otherwise>
+				</c:choose>
   				
-  				<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">${sessionScope.cse}Sign In</a>
-  				&#160;
-  				<a href="#" alt="#" class="user">Register</a><c:out value="${sessionScope.name}"/>
   			</div>
 		</div>
 		
