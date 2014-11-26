@@ -94,7 +94,9 @@ public class FrontServlet extends HttpServlet {
 		System.out.println("In Front--finish *****************\n");
 		System.out.println("[DEBUG] FrontServlet: ShoppingCart obj is " + session.getAttribute(props.getProperty("INTERNAL_CART")));
 		
-		//DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
+		
+		// I'll keep this here but we should remove this soon
+		DAO mDAO = (DAO) getServletContext().getAttribute(props.getProperty("INTERNAL_DAO"));
 		Product mProduct = (Product) getServletContext().getAttribute("main");
 		
 		try {

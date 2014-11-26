@@ -145,6 +145,11 @@ public class ShoppingCartServlet extends HttpServlet {
 				throw new ServletException("Error parsing XML for checkout!");
 			}
 			
+			// Add checkout attribute to HTTPSession for analytics
+			session.setAttribute("checkout", System.currentTimeMillis());
+			// If session is untouched for 5 mins, count as fresh visit -- should be placed some place more general
+			session.setMaxInactiveInterval(300);
+		/* FOR AJAX */	
 		} else if ((request.getParameter("addName") != null) && (request.getParameter("addID") != null) ) {
 			String itemName = request.getParameter("addName");
 			String itemID = request.getParameter("addID");
@@ -159,6 +164,9 @@ public class ShoppingCartServlet extends HttpServlet {
 				cart.addItemToCart(itemName, itemID, "1");
 				System.out.println("[ShoppingCartServlet]: Reached!");
 				out.write("Server says: add successful\nTo add:" + itemName);
+				// add to session what time last item was added
+				session.setAttribute("lastAddCart", System.currentTimeMillis());
+				session.setAttribute("lastAddCartNum", itemName);
 			} catch (Exception e) {
 				//e.printStackTrace();
 				out.write("Server says: add failed\nNo such item:" + itemName);
