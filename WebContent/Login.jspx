@@ -1,0 +1,47 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="false" />
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Front</title>
+<link href="${pageContext.request.contextPath}/res/front.css" type="text/css"
+	rel='stylesheet'/>
+<link href="${pageContext.request.contextPath}/res/bs/bootstrap-custom.css" type="text/css" rel='stylesheet'/>
+<link href="${pageContext.request.contextPath}/res/bs/bootstrap.css" type="text/css" rel='stylesheet'/>
+<link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'/>
+<script src="${pageContext.request.contextPath}/res/js/ajax.js" type="text/javascript">;</script>
+</head>
+<body>
+
+<c:if test="${not empty error}">
+    Your credentials didnt match any record. Please try again.
+</c:if>
+
+	 <form action="" method="POST">
+	 <FIELDSET>
+	 <LEGEND>Login</LEGEND>
+	    <label for="username" accesskey="u">Username</label>
+		<input type="text" name="username" id="username" value=""/>
+	    <br/>
+	    
+		<label for="password" accesskey="p">Password</label>
+		<input type="password" name="password" id="password"/>
+	    <br/>
+	
+		<br/>
+		<input type="submit" name="report" value="login"/>
+	</FIELDSET>
+	</form>
+
+
+</body>
+</html>
+</jsp:root>

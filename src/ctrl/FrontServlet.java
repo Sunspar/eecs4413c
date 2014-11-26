@@ -25,16 +25,10 @@ import java.util.Properties;
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public FrontServlet() {
         super();
     }
 
-	/**
-	 * @see javax.servlet.Servlet#init()
-	 */
     @Override
 	public void init() throws ServletException {
 		super.init();
@@ -63,16 +57,10 @@ public class FrontServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext ctx = getServletContext();
 		HttpSession session = request.getSession();
@@ -84,6 +72,11 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("categories", mProduct.getAllCategories());
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		if (session.getAttribute("name") != null){
+			System.out.println(session.getAttribute("name"));
+			request.setAttribute("name", session.getAttribute("name"));
 		}
 
 		/* Cart dispatcher */
@@ -108,7 +101,5 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
-
 	}
-
 }
