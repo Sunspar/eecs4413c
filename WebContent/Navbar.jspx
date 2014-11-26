@@ -30,7 +30,9 @@
   			<div class="col-md-3">
   				<span class="glyphicon glyphicon-shopping-cart user">&#160;</span>
   				<span class="glyphicon glyphicon-user user">&#160;</span>
-  				<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">Sign In</a>
+  				
+  				
+  				<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">${sessionScope.cse}Sign In</a>
   				&#160;
   				<a href="#" alt="#" class="user">Register</a>
   			</div>
