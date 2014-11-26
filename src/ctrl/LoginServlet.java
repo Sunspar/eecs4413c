@@ -2,45 +2,64 @@ package ctrl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class LoginServlet extends HttpServlet {
+	private final String USER_AGENT = "Mozilla/5.0";
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) {
-		this.doPost(req, resp);
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String target = "/Login.jspx";
+	    
+		req.getRequestDispatcher(target).forward(req, resp);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			URL url = new URL("http://www.cse.yorku.ca/~cse03257/auth.cgi");
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			
-			String userpass = "andrew:andrew";
-			String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userpass.getBytes());
-			connection.setRequestProperty("Authorization", basicAuth);
-			connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.01");
-			connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-			connection.setRequestProperty("User-Agent", "eFoods Login Servlet");
-			connection.setRequestProperty("Content-Length", "0");
-			connection.setRequestProperty("Content-Type", "text/html");
-			int rc = connection.getResponseCode();
-			
-			StringBuffer authResponse = new StringBuffer();
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String inputLine = "";
-			while ((inputLine = in.readLine()) != null) {
-				authResponse.append(inputLine);
-			}
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String url = "http://www.cse.yorku.ca/~cse03257/auth.cgi?" + username +":" + password;
 		
-			System.out.println(authResponse.toString());
+		try {			 
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	 
+			// optional default is GET
+			con.setRequestMethod("GET");
+	 
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+	 
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String response = in.readLine();			
+			in.close();
+	 
+			//print result
+			System.out.println(response.toString());
+			
+			//login fails
+			if (response.equals("no")){
+				String target = "/Login.jspx";
+			    req.setAttribute("error", 0);
+				req.getRequestDispatcher(target).forward(req, resp);
+			}
+			else{
+				
+			}
+	 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
