@@ -12,6 +12,13 @@
     <param-name>SHARED_VALUES_FILE</param-name>
     <param-value>WEB-INF/classes/resources/values.properties</param-value>
   </context-param>
+  <context-param>
+    <param-name>SALES_MAP_FILE</param-name>
+    <param-value>WEB-INF/classes/resources/cross-sales.values</param-value>
+  </context-param>
+  
+  
+  
   <servlet>
     <servlet-name>FrontServlet</servlet-name>
     <servlet-class>ctrl.FrontServlet</servlet-class>
