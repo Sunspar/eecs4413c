@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -19,6 +22,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+
+import model.CustomerBean;
+import model.ItemBean;
+import model.Product;
+import model.ShoppingCart;
+import model.ShoppingCartItem;
 
 /**
  * Servlet Filter implementation class AdvertisingSaleFilter
@@ -37,18 +48,58 @@ public class AdvertisingSaleFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
-		System.out.println("[AdvertisingSaleFilter] Before doFilter()");
-		chain.doFilter(request, response);
-		
+		ServletContext ctx = request.getServletContext();
+		HttpSession session = ((HttpServletRequest) request).getSession();
+		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
+		Product mProduct = (Product) ctx.getAttribute(props.getProperty("MAIN_MODEL"));
 		Map<String, Set<String>> crossSales = (Map<String, Set<String>>) request.getServletContext().getAttribute("CROSS_SALES_MAP");
 		
-		Set<String> sales = (Set<String>) crossSales.get("1409S413");
-		System.out.println(sales.contains("2002H712"));
-		System.out.println(sales.contains("2002H713"));
+		chain.doFilter(request, response);
+		
+		
+
+		// Parse out the cart items, and build the user's specific cross-sale list
+		ShoppingCart userCart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
+		
+		// Ensure we have a valid cart -- use session variable, or make one if it doesn't exist yet
+		userCart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
+		if (userCart == null) {
+			userCart = new ShoppingCart();
+			session.setAttribute(props.getProperty("INTERNAL_CART"), userCart);
+			
+			//TODO: Remove demo data below once "Add To Cart" is working
+			/* ----- DEMO DATA BEGINS -----*/
+			/*
+			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
+			 * I restarted the server. Should definitely remove this afterwards...
+			 */
+			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
+			userCart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
+			userCart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
+			userCart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
+			/* ----- DEMO DATA ENDS ----- */
+		}
+		
+		List<ShoppingCartItem> userCartContents = userCart.getCartContents();
+		List<String> crossSaleIds = new ArrayList<String>();
+		List<ItemBean> crossSaleItems = new ArrayList<ItemBean>();
+		
+		try {
+			for (ShoppingCartItem item : userCartContents) {
+				if (crossSales.containsKey(item.getNumber())) {
+					Set<String> crossSaleIDsToAdd = crossSales.get(item.getNumber());
+					for (String id : crossSaleIDsToAdd) {
+						crossSaleItems.add(mProduct.getItem(id));
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new ServletException("Issue contacting database.");
+		}
+		
+		System.out.println(crossSaleItems.toString());
+		request.setAttribute(props.getProperty("CROSS_SALE_IDS_LIST"), crossSaleIds);
+		
 	}
 
 	/**

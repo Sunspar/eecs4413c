@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import model.CustomerBean;
 import model.DAO;
+import model.ItemBean;
 import model.Product;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
@@ -154,8 +155,8 @@ public class ShoppingCartServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			
 			try {
-				mProduct.getItem(itemName, itemID);
-				cart.addItemToCart(itemName, itemID, "1");
+				ItemBean item = mProduct.getItem(itemID);
+				cart.addItemToCart(item.getName(), item.getNumber(), "1");
 				System.out.println("[ShoppingCartServlet]: Reached!");
 				out.write("Server says: add successful\nTo add:" + itemName);
 			} catch (Exception e) {
