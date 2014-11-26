@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
@@ -68,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if (username.length() > 10 || password.length() > 10 || 
 				!username.matches("[a-zA-Z0-9]*") || !password.matches("[a-zA-Z0-9]*")){
-			System.out.println("here");
+			System.out.println("credential entered wrong format");
 			
 			String target = "/Login.jspx";
 		    req.setAttribute("error", 0);
@@ -83,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String ct = encrypt(pt);
 			String url = "http://www.cse.yorku.ca/~cse03257/auth.cgi?" + ct;
-			System.out.println(url);
+			//System.out.println(url);
 			
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -110,7 +109,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("cse", username);
 				
 				//print result
-				System.out.println(session.getAttribute("name"));
+				//System.out.println(session.getAttribute("name"));
 				
 				String target = "/e";
 				req.getRequestDispatcher(target).forward(req, resp);
