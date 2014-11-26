@@ -66,10 +66,15 @@ public class LoginServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
-		if (username.length() > 10 || password.length() > 10){
+		if (username.length() > 10 || password.length() > 10 || 
+				!username.matches("[a-zA-Z0-9]*") || !password.matches("[a-zA-Z0-9]*")){
+			System.out.println("here");
+			
 			String target = "/Login.jspx";
 		    req.setAttribute("error", 0);
 			req.getRequestDispatcher(target).forward(req, resp);
+			
+			return;
 		}
 		
 		
