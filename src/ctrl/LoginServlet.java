@@ -9,15 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
 
 public class LoginServlet extends HttpServlet {
 	private final String USER_AGENT = "Mozilla/5.0";
@@ -57,10 +52,13 @@ public class LoginServlet extends HttpServlet {
 				req.getRequestDispatcher(target).forward(req, resp);
 			}
 			else{
+				HttpSession session = req.getSession();
+				session.setAttribute("name", response.toString());
+				session.setAttribute("cse", username);
 				
-			}
-	 
-			
+				String target = "/e";
+				req.getRequestDispatcher(target).forward(req, resp);
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
