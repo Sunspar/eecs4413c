@@ -64,6 +64,7 @@ public class CheckoutTime implements HttpSessionAttributeListener {
 	    	System.out.println("[LISTENER] New time:" + newTime);
 	    	System.out.println("[LISTENER] Average time:" + average);
     	} 
+    	// test
     }
 	
 }
