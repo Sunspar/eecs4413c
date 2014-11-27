@@ -34,6 +34,10 @@ span.glyphicon.user {
 	color: white;
 }
 
+table tr td {
+	padding: 10px;
+}
+
 div.header-bg-container {
 	height: 100%;
 	width: 100%;

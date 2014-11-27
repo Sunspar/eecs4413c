@@ -29,56 +29,75 @@ public class CheckoutTime implements HttpSessionAttributeListener {
     	HttpSession sn = arg.getSession();
     	ServletContext context = sn.getServletContext();
     	
+    	// Some final strings named accordingly to Context attributes
     	final String cxCheckout = "totalCheckoutAvg";
     	final String cxCart = "totalCartAvg";
-    	
     	final String cxCheckCount = "checkOutCount";
     	final String cxCartCount = "cartCount";
-    			
-    	if ( arg.getName().equals("checkout") ) {
+    	// Some finals named accordingly to Session attributes
+    	final String snCart = "lastAddCart";
+    	final String snCheckout = "checkout";
+    	
+    	// -- Begin check for session attribute -- //
+    	if ( arg.getName().equals(snCheckout) ) {
     		long creation = sn.getCreationTime();
-    		long newCheckoutTime = (long) arg.getValue() - creation;
-	    	
-    		System.out.println("[LISTENER] CheckoutTime.java: \tAttribute added" + arg.getName() + "\n\t" +
-	    			"New time: " + newCheckoutTime   + "\n\t" +
-    				"Creation time: " + creation  + "\n\t" + 
-	    			"Actual val: " + arg.getValue());
+    		long newTime = (long) arg.getValue() - creation;
+    		
+    		System.out.println("[LISTENER] CheckoutTime.java: \tAttribute added [Checkout]" + arg.getName() + "\n\t" +
+	    			"New time: " + newTime   + "\n\t" +
+    				"Creation time: " + creation  + "\n\t");
+    		
+    		
+	    	long avg;
+	    	long count;
 	    	// Check to see if there is already a running, else it's the first average
-	    	double totalCheckoutAvg;
 			if ( (context.getAttribute(cxCheckout)) != null 
-	    			&& ( ( totalCheckoutAvg = (double) context.getAttribute(cxCheckout) ) >= 0) ) 
-			{
-				totalCheckoutAvg = (double) (totalCheckoutAvg + newCheckoutTime) / 2.0; 
-				context.setAttribute(cxCheckout, totalCheckoutAvg);
-	    	} else {
-	    		context.setAttribute(cxCheckout, newCheckoutTime);
-	    	}
-			
-    	} else if ( arg.getName().equals("lastAddCart") ) {
-    		long creation = sn.getCreationTime();
-    		long newCartTime = (long) arg.getValue() - creation;
-    		
-    		System.out.println("[LISTENER] CheckoutTime.java: \tAttribute added" + arg.getName() + "\n\t" +
-	    			"New time: " + newCartTime   + "\n\t" +
-    				"Creation time: " + creation  + "\n\t" + 
-	    			"Actual val: " + arg.getValue());
-    		//sn.setAttribute("addCartAvg", (long) arg.getValue() - sn.getCreationTime());
-    		
-    		// Check to see if there is already a running, else it's the first average
-	    	long totalCartAvg;
-			if ( (context.getAttribute(cxCart)) != null 
-	    			&& ( ( totalCartAvg = (long) context.getAttribute(cxCart) ) >= 0) ) 
-			{
-				totalCartAvg = (totalCartAvg + newCartTime) / 2; 
-				context.setAttribute(cxCart, totalCartAvg);
-	    	} else {
-	    		context.setAttribute(cxCart, newCartTime);
+	    			&& ( ( avg = (long) context.getAttribute(cxCheckout) ) >= 0) ) {
+				if (  (context.getAttribute(cxCheckCount)) != null 
+						&& ( ( count = (long) context.getAttribute(cxCheckCount) ) >= 0) ) {
+					// formula to calculate running average
+					count++;
+			    	avg = avg + ( (newTime - avg)/ count );
+			    	// Update context attributes
+					context.setAttribute(cxCheckout, avg);
+					context.setAttribute(cxCheckCount, count);
+				}
+	    	} 
+			else {
+				// if this is the first time put in the context
+	    		context.setAttribute(cxCheckout, newTime);
 	    		context.setAttribute(cxCheckCount, 1L);
 	    	}
-			//sn.setAttribute("addCartAvg", newCartTime);
+    	} else if ( arg.getName().equals(snCart) ) {
+    		long creation = sn.getCreationTime();
+    		long newTime = (long) arg.getValue() - creation;
+    		
+    		System.out.println("[LISTENER] CheckoutTime.java: \tAttribute added" + arg.getName() + "\n\t" +
+	    			"New time: " + newTime   + "\n\t" +
+    				"Creation time: " + creation  + "\n\t");
+    		
+	    	long avg;
+	    	long count;
+	    	// Check to see if there is already a running, else it's the first average
+			if ( (context.getAttribute(cxCart)) != null 
+	    			&& ( ( avg = (long) context.getAttribute(cxCart) ) >= 0) ) {
+				if (  (context.getAttribute(cxCartCount)) != null 
+						&& ( ( count = (long) context.getAttribute(cxCartCount) ) >= 0) ) {
+					// formula to calculate running average
+					count++;
+			    	avg = avg + ( (newTime - avg)/ count );
+			    	// Update context attributes
+					context.setAttribute(cxCart, avg);
+					context.setAttribute(cxCartCount, count);
+				}
+	    	} 
+			else {
+				// if this is the first
+	    		context.setAttribute(cxCart, newTime);
+	    		context.setAttribute(cxCartCount, 1L);
+	    	}
     	}
-    	
-  
+    	// -- End check for session attribute -- //
     }
 
 	/**
@@ -93,53 +112,46 @@ public class CheckoutTime implements HttpSessionAttributeListener {
     public void attributeReplaced(HttpSessionBindingEvent arg)  {
     	HttpSession sn = arg.getSession();
     	ServletContext context = sn.getServletContext();
-    	// TODO: remove
+    	
+    	// Some final strings named accordingly to Context attributes
     	final String cxCheckout = "totalCheckoutAvg";
     	final String cxCart = "totalCartAvg";
-    	
     	final String cxCheckCount = "checkOutCount";
     	final String cxCartCount = "cartCount";
+    	// Some finals named accordingly to Session attributes
+    	final String snCart = "lastAddCart";
+    	final String snCheckout = "checkout";
     	
     	// arg is old value of session that was just replaced
-    	if (arg.getName().equals("checkout")) {
-    		
-    		// T(n+1) = Tn(n/n+1) + t(1/n+1)
-    		
-    		System.out.println("[LISTENER] CheckoutTime.java: \tNew checkout" + "\n\t" +
-	    			"Last checkout: " + (long) sn.getAttribute("checkout"));
-	    	System.out.println("[LISTENER] Total Checkout time: \tAttribute added" + arg.getName() + "\n\t" +
-	    			"Checkout time: " + ((long) sn.getAttribute("checkout") - (long) arg.getValue()) );
-	    	
-	    	long newTime = (long) sn.getAttribute("checkout") - (long) arg.getValue();
-	    	
-	    	double avg = (double) context.getAttribute(cxCheckout);
-	    	avg = (avg + newTime) / 2;
-	    	
-	    	context.setAttribute(cxCheckout, avg);
-    	}
-    	else if (arg.getName().equals("lastAddCart")) {
-    		/* {
-	    	System.out.println("[LISTENER] Add cart time:" + arg.getValue());
-	    	System.out.println("[LISTENER] Last time:" + lastTime);
-	    	System.out.println("[LISTENER] New time:" + newTime);
-	    	System.out.println("[LISTENER] Average time:" + average);
-    		} */
-    		
-    		System.out.println("DEBUG: " + context.getAttribute(cxCart));
-    		
-    		long newTime = (long) sn.getAttribute("lastAddCart") - (long) arg.getValue();
-	    	long avg = (long) context.getAttribute(cxCart);
+    	if (arg.getName().equals(snCheckout)) {
+    		long newTime = (long) sn.getAttribute(snCheckout) - (long) arg.getValue();
+	    	long avg = (long) context.getAttribute(cxCheckout);
 	    	long count = (long) context.getAttribute(cxCheckCount);
 	    	
 	    	// formula to calculate running average
-	    	avg = avg + ( (newTime - avg)/(count+1) );
-	    	
-	    	System.out.println("[LISTENER] New time:" + newTime);
+			count++;
+	    	avg = avg + ( (newTime - avg)/ count );
+	    	// Update context attributes
+			context.setAttribute(cxCheckout, avg);
+			context.setAttribute(cxCheckCount, count);
+			System.out.println("[LISTENER] New time:" + newTime);
 	    	System.out.println("[LISTENER] Average time:" + avg);
+    	}
+    	else if (arg.getName().equals(snCart)) {	    	
+	    	long newTime = (long) sn.getAttribute(snCart) - (long) arg.getValue();
+	    	long avg = (long) context.getAttribute(cxCart);
+	    	long count = (long) context.getAttribute(cxCartCount);
 	    	
-	    	context.setAttribute(cxCart, avg);
+	    	// formula to calculate running average
+			count++;
+	    	avg = avg + ( (newTime - avg)/ count );
+	    	// Update context attributes
+			context.setAttribute(cxCart, avg);
+			context.setAttribute(cxCartCount, count);
+			
+			System.out.println("[LISTENER] New time:" + newTime);
+	    	System.out.println("[LISTENER] Average time:" + avg);
     	} 
-    	// test
     }
 	
 }

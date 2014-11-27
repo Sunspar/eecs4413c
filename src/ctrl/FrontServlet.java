@@ -104,6 +104,10 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("ticket", "F-to-Login");
 			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
 		} 
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Analytics")) {
+			request.setAttribute("ticket", "F-to-Login");
+			ctx.getNamedDispatcher("Analytics").forward(request, response);
+		} 
 		else
 		{
 			request.setAttribute("ticket", "Front");
