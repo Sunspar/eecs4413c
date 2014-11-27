@@ -21,7 +21,6 @@
 			<div class="col-md-9">
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/e/">Home</a></li>
-				<li><a href="A">Mortgage Calculator</a></li>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="#">${cat.name}</a></li>
 				</c:forEach>
