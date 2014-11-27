@@ -5,12 +5,12 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -29,7 +29,7 @@ public class B2B {
 		xmlPath = path;
 	}
 	
-	// HTTP GET request
+	// get the price of an item from a specific provider
 	private double getPrice(String company, String itemNo) throws Exception { 
 		//String url = "http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws?method=quote&itemNumber=0905A708"; 
 		String url = "http://roumani.eecs.yorku.ca:4413/axis/" + company +".jws?method=quote&itemNumber=" + itemNo; 
@@ -50,12 +50,10 @@ public class B2B {
 		}
 		in.close();
 		
-		//Pattern pattern = Pattern.compile(">(.*)<");
 		Pattern pattern = Pattern.compile("quoteReturn(.*)quoteReturn");
 		Matcher matcher = pattern.matcher(response.toString());
 		if (matcher.find())
 		{
-		    //System.out.println(matcher.group(1));
 			Pattern pattern2 = Pattern.compile(">(.*)<");
 			Matcher matcher2 = pattern2.matcher(matcher.group(1));
 			if (matcher2.find())
@@ -65,11 +63,10 @@ public class B2B {
 		}
  
 		return -1.0;
-		
 	}
 	
-	//return a map of itemname - quantity
-	public HashMap readXMLreports(){
+	//return a map of itemName - quantity
+	public HashMap<String, Integer> getRawOrder(){
 		Map<String, Integer> list = new HashMap<String, Integer>();		
 		File xmlFolder = new File(xmlPath);
 		
@@ -111,6 +108,16 @@ public class B2B {
 		return (HashMap<String, Integer>) list;
 	}
 	
+	public HashMap<String, ArrayList<String>> orderWtCompanyMap(HashMap<String, Integer> list){
+		Map<String, ArrayList<String>> order = new HashMap<String, ArrayList<String>>();
+		
+		for (String itemNo : list.keySet()) {
+		    System.out.println("itemNo = " + itemNo);
+		}
+		
+		return (HashMap) order;		
+	}
+	
 	public void order(){
 		
 	}
@@ -119,8 +126,9 @@ public class B2B {
 		B2B b2b = new B2B("/eecs/home/cse03257/workspace/eecs4413c/orders");
 		//public String xmlPath = "/home/thao/workspace/eecs4413c/orders/";
 
-		b2b.readXMLreports();
-		System.out.println(b2b.getPrice("YYZ", "0905A708"));
-		System.out.println(b2b.getPrice("YVR", "0905A708"));
+		HashMap<String, Integer> list = b2b.getRawOrder();
+		Map<String, ArrayList<String>> orderMapWtCompany = b2b.orderWtCompanyMap(list);
+		
+		//System.out.println(orderMapWtCompany);
 	}
 }
