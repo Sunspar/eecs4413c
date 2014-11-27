@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String ct = encrypt(pt);
 			String url = "http://www.cse.yorku.ca/~cse03257/auth.cgi?" + ct;
-			//System.out.println(url);
+			System.out.println(url);
 			
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();

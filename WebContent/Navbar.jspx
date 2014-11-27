@@ -42,8 +42,7 @@
 			  				<a href="#" alt="#" class="user">Register</a>
 				      </c:otherwise>
 				</c:choose>
-  				
-  				
+ 
   			</div>
 		</div>
 		
