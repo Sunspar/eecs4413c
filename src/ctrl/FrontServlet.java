@@ -106,7 +106,6 @@ public class FrontServlet extends HttpServlet {
 		} 
 		else
 		{
-
 			request.setAttribute("ticket", "Front");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}

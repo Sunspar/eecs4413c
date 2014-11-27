@@ -33,7 +33,7 @@
   				
   				<c:choose>
 				      <c:when test="${not empty name}">
-				      		Hello <c:out value="${name}"/>!
+				      		<span class="user">Hello <c:out value="${name}"/>!</span>
 				      </c:when>
 				
 				      <c:otherwise>
