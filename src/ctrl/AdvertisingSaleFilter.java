@@ -52,11 +52,7 @@ public class AdvertisingSaleFilter implements Filter {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
 		Product mProduct = (Product) ctx.getAttribute(props.getProperty("MAIN_MODEL"));
-		Map<String, Set<String>> crossSales = (Map<String, Set<String>>) request.getServletContext().getAttribute("CROSS_SALES_MAP");
-		
-		chain.doFilter(request, response);
-		
-		
+		Map<String, Set<String>> crossSales = (Map<String, Set<String>>) ctx.getAttribute("CROSS_SALES_MAP");
 
 		// Parse out the cart items, and build the user's specific cross-sale list
 		ShoppingCart userCart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
@@ -66,22 +62,9 @@ public class AdvertisingSaleFilter implements Filter {
 		if (userCart == null) {
 			userCart = new ShoppingCart();
 			session.setAttribute(props.getProperty("INTERNAL_CART"), userCart);
-			
-			//TODO: Remove demo data below once "Add To Cart" is working
-			/* ----- DEMO DATA BEGINS -----*/
-			/*
-			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
-			 * I restarted the server. Should definitely remove this afterwards...
-			 */
-			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
-			userCart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
-			userCart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
-			userCart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
-			/* ----- DEMO DATA ENDS ----- */
 		}
 		
 		List<ShoppingCartItem> userCartContents = userCart.getCartContents();
-		List<String> crossSaleIds = new ArrayList<String>();
 		List<ItemBean> crossSaleItems = new ArrayList<ItemBean>();
 		
 		try {
@@ -97,9 +80,8 @@ public class AdvertisingSaleFilter implements Filter {
 			throw new ServletException("Issue contacting database.");
 		}
 		
-		System.out.println(crossSaleItems.toString());
-		request.setAttribute(props.getProperty("CROSS_SALE_IDS_LIST"), crossSaleIds);
-		
+		request.setAttribute(props.getProperty("CROSS_SALE_ITEM_LIST"), crossSaleItems);
+		chain.doFilter(request, response);
 	}
 
 	/**

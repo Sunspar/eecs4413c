@@ -67,18 +67,6 @@ public class ShoppingCartServlet extends HttpServlet {
 		if (cart == null) {
 			cart = new ShoppingCart();
 			session.setAttribute(props.getProperty("INTERNAL_CART"), cart);
-			
-			//TODO: Remove demo data below once "Add To Cart" is working
-			/* ----- DEMO DATA BEGINS -----*/
-			/*
-			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
-			 * I restarted the server. Should definitely remove this afterwards...
-			 */
-			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
-			cart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
-			cart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
-			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
-			/* ----- DEMO DATA ENDS ----- */
 		}
 		
 		// If the user asked to update the quantities of an item, update then now
