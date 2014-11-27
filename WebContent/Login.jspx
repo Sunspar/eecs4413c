@@ -29,7 +29,7 @@
 	    
 	    <tr>
 		<td><label for="password" accesskey="p">Password</label></td>
-		<td><input class="form-control" type="password" name="password" id="password"/></td>
+		<td width="250px"><input class="form-control" type="password" name="password" id="password"/></td>
 	    </tr>
 	
 		
