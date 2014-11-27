@@ -27,7 +27,7 @@
 					<c:forEach var="item" items="${cartContents}" varStatus="loop">
 							<tr>
 								<td><label name="itemName${loop.index}">${item.name}</label></td>
-								<td>${item.price}</td>
+								<td><f:formatNumber type="currency" value="${item.price}"></f:formatNumber></td>
 								<td> <input class="form-control" name="itemQuantity${loop.index}" type="text" value="${item.quantity}"/></td>
 								<c:set var="total" value="${total + item.price * item.quantity}"></c:set>
 								<td><f:formatNumber type="currency" value="${item.price * item.quantity}"></f:formatNumber></td>
