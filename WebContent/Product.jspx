@@ -34,6 +34,14 @@
 					<h1>Search Results for: ${query}</h1>
 				</c:when>
 			</c:choose>
+			<c:if test="${not empty saleItems}">
+					<div id="crossSalesDiv">
+						<c:forEach var="item" items="${saleItems}">
+							${item.name}   ${item.number}   ${item.price} <br />
+						</c:forEach>
+					</div>
+			</c:if>
+
 				<c:forEach var="x" items="${itemsByCat}">
 					<div class="e-list-item">
 						<!--  <span class="li-qty">

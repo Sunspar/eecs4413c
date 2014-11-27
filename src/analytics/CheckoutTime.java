@@ -139,6 +139,7 @@ public class CheckoutTime implements HttpSessionAttributeListener {
 	    	
 	    	context.setAttribute(cxCart, avg);
     	} 
+    	// test
     }
 	
 }
