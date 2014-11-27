@@ -93,7 +93,7 @@ public class CheckoutTime implements HttpSessionAttributeListener {
     public void attributeReplaced(HttpSessionBindingEvent arg)  {
     	HttpSession sn = arg.getSession();
     	ServletContext context = sn.getServletContext();
-    	
+    	// TODO: remove
     	final String cxCheckout = "totalCheckoutAvg";
     	final String cxCart = "totalCartAvg";
     	
