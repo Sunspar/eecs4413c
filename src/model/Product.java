@@ -32,12 +32,12 @@ public class Product {
 		return list;
 	}
 	
-	public ItemBean getItem(String name, String number) throws Exception {
+	public ItemBean getItem(String number) throws Exception {
 		ItemBean item = null;
-		if (name.equals("") || number.equals("")) {
+		if (number.equals("")) {
 			throw new InvalidParameterException("Invalid parameters!");
 		}
-		item = mDAO.getItem(name, number);
+		item = mDAO.getItem(number);
 		if (item == null) {
 			throw new InvalidParameterException("Item does not exist!");
 		}

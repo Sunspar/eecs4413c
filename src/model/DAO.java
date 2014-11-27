@@ -113,21 +113,20 @@ public class DAO {
 	
 	/**
 	 * Queries the database for an item
-	 * 
+	 * @param number the item number of the queried item
 	 * @return An {@link ItemBean} to input name and number
 	 * @throws SQLException if there was an error communicating with the database
 	 */
-	public ItemBean getItem(String name, String number) throws SQLException {
+	public ItemBean getItem(String number) throws SQLException {
 		ItemBean result = null;
 		Connection conn = this.ds.getConnection();
 		
 		String queryString = "";
 		queryString += "SELECT *";
-		queryString += " FROM ROUMANI.ITEM WHERE LOWER(NAME) LIKE LOWER(?) AND NUMBER LIKE ?" ;
+		queryString += " FROM ROUMANI.ITEM WHERE NUMBER LIKE ?" ;
 		
 		PreparedStatement ps = conn.prepareStatement(queryString);
-		ps.setString(1, name);
-		ps.setString(2, number);
+		ps.setString(1, number);
 		
 		ResultSet rs = ps.executeQuery();
 		
@@ -145,6 +144,7 @@ public class DAO {
 		}
 		return result;
 	}
+	
 	
 	
 	/**

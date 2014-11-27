@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import model.CustomerBean;
 import model.DAO;
+import model.ItemBean;
 import model.Product;
 import model.ShoppingCart;
 import model.ShoppingCartItem;
@@ -66,18 +67,6 @@ public class ShoppingCartServlet extends HttpServlet {
 		if (cart == null) {
 			cart = new ShoppingCart();
 			session.setAttribute(props.getProperty("INTERNAL_CART"), cart);
-			
-			//TODO: Remove demo data below once "Add To Cart" is working
-			/* ----- DEMO DATA BEGINS -----*/
-			/*
-			 * Dummy data inserted because I was too lazy to insert via Eclipse's Display view every time
-			 * I restarted the server. Should definitely remove this afterwards...
-			 */
-			session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), new CustomerBean("ajturner", "Andrew"));
-			cart.addItemToCart("Minced Rib Meat by VX", "0905A044",  "1");
-			cart.addItemToCart("J0 Chicken Meat", "0905A708", "5");
-			cart.addItemToCart("Nuts Ice Cream with Vanilla by RC", "1409S929", "12");
-			/* ----- DEMO DATA ENDS ----- */
 		}
 		
 		// If the user asked to update the quantities of an item, update then now
@@ -159,8 +148,8 @@ public class ShoppingCartServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			
 			try {
-				mProduct.getItem(itemName, itemID);
-				cart.addItemToCart(itemName, itemID, "1");
+				ItemBean item = mProduct.getItem(itemID);
+				cart.addItemToCart(item.getName(), item.getNumber(), "1");
 				System.out.println("[ShoppingCartServlet]: Reached!");
 				out.write("Server says: add successful\nTo add:" + itemName);
 				// add to session what time last item was added
