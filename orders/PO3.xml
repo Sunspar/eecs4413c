@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<order id="120" submitted="2011-11-29">
+
+	<customer account="cse05738">
+		<name>Justin Andrew</name>
+	</customer>
+
+	<items>
+		<item number="2910h785">
+			<name>N4 Raisin Cereal</name>
+			<price>5.02</price>
+			<quantity>100</quantity>
+			<extended>502.0</extended>
+		</item>
+
+		<item number="2910h145">
+			<name>Fruits Nuts Cereal by ZB</name>
+			<price>7.39</price>
+			<quantity>120</quantity>
+			<extended>886.8</extended>
+		</item>
+	</items>
+
+	<total>1388.80</total>
+	<shipping>0</shipping>
+	<HST>180.54</HST>
+	<grandTotal>1569.34</grandTotal>
+
+</order>
