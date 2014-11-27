@@ -65,6 +65,7 @@ public class B2B {
 		}
  
 		return -1.0;
+		
 	}
 	
 	//return a map of itemname - quantity
