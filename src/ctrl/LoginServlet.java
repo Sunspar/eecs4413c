@@ -9,14 +9,18 @@ import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.Properties;
 
 import javax.crypto.Cipher;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.CustomerBean;
 
 import java.io.IOException;
 
@@ -108,6 +112,10 @@ public class LoginServlet extends HttpServlet {
 			}
 			else{
 				HttpSession session = req.getSession();
+				ServletContext ctx = getServletContext();
+				Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
+				CustomerBean customer = new CustomerBean(username, response.toString());
+				session.setAttribute(props.getProperty("INTERNAL_CUSTOMER"), customer);
 				session.setAttribute("name", response.toString());
 				session.setAttribute("cse", username);
 				

@@ -44,7 +44,7 @@
 	
 		<tr>
 		<td></td>
-		<td align="right"><input class="btn btn-success" type="submit" name="report" value="login"/>
+		<td align="right"><input class="btn btn-success" type="submit" name="AuthenticationRequest" value="login"/>
 		</td>
 		</tr>
 	</FIELDSET>
