@@ -1,5 +1,4 @@
 package b2b;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -140,7 +139,8 @@ public class B2B {
 		return (HashMap<String, Integer>) list;
 	}
 	
-	public HashMap<String, ArrayList<String>> orderWtCompanyMap(HashMap<String, Integer> list) throws Exception{
+	public HashMap<String, ArrayList<String>> 
+		orderWtCompanyMap(HashMap<String, Integer> list) throws Exception{
 		Map<String, ArrayList<String>> order = new HashMap<String, ArrayList<String>>();
 		
 		for (String itemNo : list.keySet()) {
@@ -170,22 +170,33 @@ public class B2B {
 	}
 	
 	public void genHTMLreport(HashMap<String, ArrayList<String>> order) throws Exception{
-		PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-		writer.println("The first line");
-		writer.println("The second line");
+		long now = System.currentTimeMillis();
+		PrintWriter writer = new PrintWriter("/eecs/home/cse03257/workspace/eecs4413c/report" + now + ".html", "UTF-8");
+		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
+		writer.println("<tr> <td>Item Number</td> <td>Company</td> <td>Price</td></tr>");
+		
+		for (String itemNo : order.keySet()) {
+			String company = order.get(itemNo).get(0);
+			String price = order.get(itemNo).get(1);
+			writer.println("<tr> <td>" + itemNo + "</td> <td>"+company+"</td> <td>"+price+"</td></tr>"); 
+		}
+		
+		writer.println("</table></body>	</html>");
 		writer.close();
 	}
 
 	public static void main(String[] args) throws Exception {		 
 		B2B b2b = new B2B("/eecs/home/cse03257/workspace/eecs4413c/orders");
-		//public String xmlPath = "/home/thao/workspace/eecs4413c/orders/";
 
 		HashMap<String, Integer> list = b2b.getRawOrder();
-		Map<String, ArrayList<String>> orderMapWtCompany = b2b.orderWtCompanyMap(list);
+		HashMap<String, ArrayList<String>> orderMapWtCompany = b2b.orderWtCompanyMap(list);
 		
 		System.out.println(orderMapWtCompany);
 		
+		long millis = System.currentTimeMillis();
+		b2b.genHTMLreport(orderMapWtCompany);
 		
+		System.out.println(millis);
 	}
 }
 
