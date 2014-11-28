@@ -56,6 +56,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		// Flag to see if action is external to shopping cart JSP 
 		boolean isExternalAction = false;
 		boolean isLoginNeeded = false; // Triggers a forced login on exiting the cart, if the user is not logged in
+		boolean isPurchaseOrderCreated = false; // Set if user finalizes an order
 		
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
@@ -137,6 +138,9 @@ public class ShoppingCartServlet extends HttpServlet {
 					fw.close();
 					
 					cart.empty();
+					String webFileLocation = "purchases/" + poFilename;
+					request.setAttribute("purchaseOrderXmlFile", webFileLocation);
+					isPurchaseOrderCreated = true;
 				} catch (JAXBException e) {
 					throw new ServletException("Error parsing XML for checkout!");
 				}
@@ -184,8 +188,13 @@ public class ShoppingCartServlet extends HttpServlet {
 			request.setAttribute("target", "/Login.jspx");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		} else if (!isExternalAction) {
-			request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
-			request.setAttribute("target", "/Cart.jspx");
+			if (isPurchaseOrderCreated) {
+				request.setAttribute("target", "/OrderComplete.jspx");
+			} else {
+				request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
+				request.setAttribute("target", "/Cart.jspx");
+			}
+			
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
 	}
