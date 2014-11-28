@@ -44,7 +44,15 @@
     <servlet-class>ctrl.ShoppingCartServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>Analytics</servlet-name>
+    <servlet-name>AnalyticsServlet</servlet-name>
     <servlet-class>ctrl.AnalyticsServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>ctrl.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ItemServlet</servlet-name>
+    <servlet-class>ctrl.ItemServlet</servlet-class>
   </servlet>
 </web-app>

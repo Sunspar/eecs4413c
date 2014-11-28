@@ -108,19 +108,15 @@ public class FrontServlet extends HttpServlet {
 		 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Analytics")) {
 			request.setAttribute("ticket", "F-to-Analytics");
-			ctx.getNamedDispatcher("Analytics").forward(request, response);
+			ctx.getNamedDispatcher("AnalyticsServlet").forward(request, response);
 		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Express")) {
-			request.setAttribute("ticket", "F-to-Express");
-			ctx.getNamedDispatcher("Express").forward(request, response);
-		}
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Logout")) {
-			if (session.getAttribute("name") != null){
-				session.removeAttribute("name");
-				request.removeAttribute("name");
-			}
 			request.setAttribute("ticket", "Front");
-			request.getRequestDispatcher("/Front.jspx").forward(request, response);
+			ctx.getNamedDispatcher("LogoutServlet").forward(request, response);
+		}
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Item")) {
+			request.setAttribute("ticket", "Front-to-Item");
+			ctx.getNamedDispatcher("ItemServlet").forward(request, response);
 		}
 		else
 		{
