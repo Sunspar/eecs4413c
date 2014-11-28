@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +39,11 @@ public class ShoppingCartWrapper {
 	@XmlElement(name="grandTotal")
 	private double grandTotal;
 	
-	public ShoppingCartWrapper(CustomerBean customer, List<ShoppingCartItem> items) {
+	public ShoppingCartWrapper(CustomerBean customer, long orderId, List<ShoppingCartItem> items) {
 		this.customer = customer;
-		Date dateObj = new Date();
-		String date = dateObj.getYear() + "-" + dateObj.getMonth() + "-" + dateObj.getDate();
-		this.id = 12345; // TODO: Generate proper order ID number
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		this.submitted = sdf.format(new Date());
+		this.id = orderId; // TODO: Generate proper order ID number
 		this.items = items;
 
 		this.subTotal = 0;
@@ -69,5 +70,8 @@ public class ShoppingCartWrapper {
 		return this.submitted;
 	}
 	
+	public CustomerBean getCustomer() {
+		return this.customer;
+	}
 	private ShoppingCartWrapper() {} // Do not call this constructor.
 }
