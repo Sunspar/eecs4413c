@@ -14,6 +14,9 @@
 	</head>
 	<body>
 		<h1> EECS4413 Shopping Cart</h1><br />
+		<c:if test="${not empty errorCart }">
+			<h5>${errorCart}</h5>
+		</c:if>
 		<table class="cart">
 			<c:if test="${not empty cartContents}">
 				<form action="${pageContext.request.contextPath}/e/Cart" method="POST">

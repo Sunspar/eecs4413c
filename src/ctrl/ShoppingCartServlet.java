@@ -138,10 +138,15 @@ public class ShoppingCartServlet extends HttpServlet {
 			// If session is untouched for 5 mins, count as fresh visit -- should be placed some place more general
 			session.setMaxInactiveInterval(300);
 		/* FOR AJAX */	
-		} else if ((request.getParameter("addName") != null) && (request.getParameter("addID") != null) ) {
+		} else if ((request.getParameter("addName") != null) || (request.getParameter("addID") != null) ) {
 			String itemName = request.getParameter("addName");
 			String itemID = request.getParameter("addID");
-			isExternalAction = true;
+			
+			if (request.getParameter("submitExpress") != null ) {
+				isExternalAction = false;
+			} else {
+				isExternalAction = true;
+			}
 			
 			// Server response
 			response.setContentType("text/html");
@@ -157,6 +162,8 @@ public class ShoppingCartServlet extends HttpServlet {
 				session.setAttribute("lastAddCartNum", itemName);
 			} catch (Exception e) {
 				//e.printStackTrace();
+				// Store error message in request
+				request.setAttribute("errorCart", "Item " + itemID + " does not exist or is no longer available!" );
 				out.write("Server says: add failed\nNo such item:" + itemName);
 			}
 		}

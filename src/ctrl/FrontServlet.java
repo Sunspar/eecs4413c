@@ -87,12 +87,12 @@ public class FrontServlet extends HttpServlet {
 			System.out.println(session.getAttribute("name"));
 			request.setAttribute("name", session.getAttribute("name"));
 		}
-
-		/* Cart dispatcher */
+		
+		/* dispatcher */
 		if ((request.getPathInfo() != null && request.getPathInfo().equals("/Search")) 
 				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Category")))
 		{
-			request.setAttribute("ticket", "F-to-Cart");
+			request.setAttribute("ticket", "F-to-Products");
 			this.getServletContext().getNamedDispatcher("ProductServlet").forward(request, response);
 		} 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
@@ -105,9 +105,21 @@ public class FrontServlet extends HttpServlet {
 			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
 		} 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Analytics")) {
-			request.setAttribute("ticket", "F-to-Login");
+			request.setAttribute("ticket", "F-to-Analytics");
 			ctx.getNamedDispatcher("Analytics").forward(request, response);
 		} 
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Express")) {
+			request.setAttribute("ticket", "F-to-Express");
+			ctx.getNamedDispatcher("Express").forward(request, response);
+		}
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Logout")) {
+			if (session.getAttribute("name") != null){
+				session.removeAttribute("name");
+				request.removeAttribute("name");
+			}
+			request.setAttribute("ticket", "Front");
+			request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		}
 		else
 		{
 			request.setAttribute("ticket", "Front");

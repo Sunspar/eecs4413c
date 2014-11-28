@@ -95,7 +95,7 @@
 								Added to Cart!
 							</div>
 							<!-- Custom tag to produce random image -->
-							<my:pImg mclass="img-responsive img-thumbnail" path="${pageContext.request.contextPath}/res/img/cat-${catID}/"></my:pImg>
+							<my:pImg mclass="img-responsive img-thumbnail" path="${pageContext.request.contextPath}/res/img/cat-${x.catID}/"></my:pImg>
 							<!-- <img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/> -->
 						</div>
 						<div class="cart-btn-container" align="right">

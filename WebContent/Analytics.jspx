@@ -16,11 +16,11 @@
 		<table>
 			<tr>
 				<td><span class="glyphicon glyphicon-list-alt"></span></td><td>Average Checkout Time:</td>
-				<td>${totalCheckoutAvg} ms</td>
+				<c:if test="${not empty totalCheckoutAvg}"><td>${totalCheckoutAvg} ms</td></c:if>
 			</tr>
 			<tr>
 				<td><span class="glyphicon glyphicon-shopping-cart"></span></td><td>Average Add-to-Cart Time:</td>
-				<td>${totalCartAvg} ms</td>
+				<c:if test="${not empty totalCartAvg}"><td>${totalCartAvg} ms</td></c:if>
 			</tr>
 		</table>
 	</body>
