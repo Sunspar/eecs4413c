@@ -205,7 +205,7 @@ public class B2B {
 		PrintWriter writer = new PrintWriter(outputPath + now + ".html", "UTF-8");
 		writer.println("<p>Procurement Report</p>");
 		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
-		writer.println("<tr> <td>Item Number</td> <td>Company</td> <td>Price</td><td>Confirmation Number</td></tr>");
+		writer.println("<tr> <td>Item Number</td> <td>Winning Company</td> <td>Lowest Price</td><td>Confirmation Number</td></tr>");
 		
 		for (String itemNo : order.keySet()) {
 			String company = order.get(itemNo).get(0);
