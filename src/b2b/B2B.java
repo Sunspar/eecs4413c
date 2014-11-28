@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import org.w3c.dom.NodeList;
 public class B2B {	
 	private final String key = "Mozilla/5.0";
 	private final String USER_AGENT = "Mozilla/5.0";
-	public String xmlPath, outputPath, orderKey = "";
+	public String xmlPath, outputPath, orderKey = "4413secret";
 	
 	public B2B(String path, String output){
 		xmlPath = path;
@@ -139,8 +137,8 @@ public class B2B {
 		return (HashMap<String, Integer>) list;
 	}
 	
-	public HashMap<String, ArrayList<String>> 
-		orderWtCompanyMap(HashMap<String, Integer> list) throws Exception{
+	// itemNo = [company price quantity]
+	public HashMap<String, ArrayList<String>> orderWtCompanyMap(HashMap<String, Integer> list) throws Exception{
 		Map<String, ArrayList<String>> order = new HashMap<String, ArrayList<String>>();
 		
 		for (String itemNo : list.keySet()) {
@@ -155,18 +153,49 @@ public class B2B {
 		    	ArrayList<String> company_price = new ArrayList<String>();
 			    company_price.add(company);
 			    company_price.add(String.valueOf(price));
+			    company_price.add(String.valueOf(list.get(itemNo)));
 			    
 			    order.put(itemNo, company_price);
-		    }   
+		    }
 		    
 		}
 		
 		return (HashMap<String, ArrayList<String>>) order;		
 	}
 	
-	
-	public void placeOrder(HashMap<String, ArrayList<String>> order){
+	public String orderItem(String itemNo, String company, String quantity) throws Exception{
+		String url = "http://roumani.eecs.yorku.ca:4413/axis/"+ company +
+				".jws?method=order&itemNumber=" + itemNo + "&quantity=" + quantity + "&key=" + orderKey;
 		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+ 
+		con.setRequestMethod("GET"); 
+		con.setRequestProperty("User-Agent", USER_AGENT);
+ 
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+ 
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		
+		Pattern pattern = Pattern.compile("Confirmation(.*)orderReturn");
+		Matcher matcher = pattern.matcher(response.toString());
+		if (matcher.find())
+		{
+			Pattern pattern2 = Pattern.compile("#(.*)<");
+			Matcher matcher2 = pattern2.matcher(matcher.group(1));
+			if (matcher2.find())
+			{
+				return matcher2.group(1);
+			}
+		}
+		
+		return "";
 	}
 	
 	public void genHTMLreport(HashMap<String, ArrayList<String>> order) throws Exception{
@@ -176,12 +205,15 @@ public class B2B {
 		PrintWriter writer = new PrintWriter(outputPath + now + ".html", "UTF-8");
 		writer.println("<p>Procurement Report</p>");
 		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
-		writer.println("<tr> <td>Item Number</td> <td>Company</td> <td>Price</td></tr>");
+		writer.println("<tr> <td>Item Number</td> <td>Company</td> <td>Price</td><td>Confirmation Number</td></tr>");
 		
 		for (String itemNo : order.keySet()) {
 			String company = order.get(itemNo).get(0);
 			String price = order.get(itemNo).get(1);
-			writer.println("<tr> <td>" + itemNo + "</td> <td>"+company+"</td> <td>"+price+"</td></tr>"); 
+			String confirmNo = orderItem(itemNo, company, order.get(itemNo).get(2));
+			
+			writer.println("<tr> <td>" + itemNo + "</td> <td>"+company+
+					"</td> <td>"+price+"</td><td>"+ confirmNo + "</td></tr>"); 
 		}
 		
 		writer.println("</table></body>	</html>");
