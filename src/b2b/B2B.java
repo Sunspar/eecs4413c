@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 public class B2B {	
 	private final String key = "Mozilla/5.0";
 	private final String USER_AGENT = "Mozilla/5.0";
-	public String xmlPath, outputPath;
+	public String xmlPath, outputPath, orderKey = "";
 	
 	public B2B(String path, String output){
 		xmlPath = path;
@@ -171,6 +171,8 @@ public class B2B {
 	
 	public void genHTMLreport(HashMap<String, ArrayList<String>> order) throws Exception{
 		long now = System.currentTimeMillis();
+		System.out.println("output file is " + now + ".html");
+		
 		PrintWriter writer = new PrintWriter(outputPath + now + ".html", "UTF-8");
 		writer.println("<p>Procurement Report</p>");
 		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
@@ -196,10 +198,7 @@ public class B2B {
 		
 		System.out.println(orderMapWtCompany);
 		
-		long millis = System.currentTimeMillis();
 		b2b.genHTMLreport(orderMapWtCompany);
-		
-		System.out.println(millis);
 	}
 }
 
