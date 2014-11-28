@@ -10,6 +10,7 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>MiniCart</head>
+	
 	<body>
 		<h4>Your Cart</h4><br />
 		<c:if test="${not empty errorCart }">
