@@ -61,7 +61,6 @@
 			</div>
 		
 		</div><!-- /row -->
-		
 
 		<div class="row" id="footer">
 			<jsp:include page="Footer.jspx">
