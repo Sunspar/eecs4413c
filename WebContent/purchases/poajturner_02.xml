@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='PO.xsl'?>
+<order id="3" submitted="2014-11-27">
+    <customer account="ajturner">
+        <name>Andrew Turner</name>
+    </customer>
+    <total>11.3</total>
+    <shipping>5.0</shipping>
+    <HST>2.119</HST>
+    <grandTotal>18.419</grandTotal>
+    <items>
+        <item number="2910h074">
+            <name>L5 Oat Cereal</name>
+            <price>4.92</price>
+            <quantity>1</quantity>
+            <extended>4.92</extended>
+        </item>
+        <item number="2910h087">
+            <name>Wheat Fruits Cereal by FR</name>
+            <price>3.05</price>
+            <quantity>1</quantity>
+            <extended>3.05</extended>
+        </item>
+        <item number="2910h019">
+            <name>L6 Fruits Cereal</name>
+            <price>3.33</price>
+            <quantity>1</quantity>
+            <extended>3.33</extended>
+        </item>
+    </items>
+</order>

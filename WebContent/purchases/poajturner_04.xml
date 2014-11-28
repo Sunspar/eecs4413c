@@ -1,0 +1,19 @@
+
+<?xml version='1.0'?><?xml-stylesheet type='text/xsl' href='PO.xsl'?>
+<order id="5" submitted="2014-11-27">
+    <customer account="ajturner">
+        <name>Andrew Turner</name>
+    </customer>
+    <total>3.84</total>
+    <shipping>5.0</shipping>
+    <HST>1.1492</HST>
+    <grandTotal>9.9892</grandTotal>
+    <items>
+        <item number="2002H123">
+            <name>Provolone Cheese by RI</name>
+            <price>3.84</price>
+            <quantity>1</quantity>
+            <extended>3.84</extended>
+        </item>
+    </items>
+</order>
