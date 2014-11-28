@@ -195,6 +195,9 @@ input.search {
 }
 
 div#splash {
+	position: relative;
+	margin: 0 auto;
+	width: 95%;
 	height: 300px;
 	background-image: url('../res/splashimg.jpg');
 	background-size: cover;
@@ -263,6 +266,30 @@ div.e-list-item {
 	margin: 10px;
 	vertical-align: top;
 	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-bottom: 2px solid rgba(0,0,0,0.1);
+	width: 250px;
+}
+
+div.e-list-item-full {
+	display: inline-block;
+	margin: 10px;
+	vertical-align: top;
+	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-bottom: 2px solid rgba(0,0,0,0.1);
+	width: 90%;
+}
+
+div.e-list-item-front {
+	display: inline-block;
+	margin: 10px;
+	vertical-align: top;
+	background-color: rgba(46, 204, 113, 0.1);
 	border-radius: 5px;
 	padding: 10px;
 	border: 1px solid rgba(0,0,0,0.1);
@@ -354,4 +381,48 @@ div#crossSales {
 
 .cross-sale-caption {
 	color: #7f8c8d;
+}
+
+.title-divider {
+	border-radius: 5px;
+	background-color: rgba(0,0,0,0.05);
+	padding: 5px;
+}
+
+a.item-link {
+	color: #34495e;
+}
+
+/* Sliding Catalog Cart */
+div#slide-cart {
+	padding: 10px;
+	z-index: 100;
+	height: 100%;
+	position: fixed;
+	width: 40%;
+	margin-right: -41%;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(236, 240, 241,0.92);
+	overflow-y: scroll;
+	border: 0;
+	opacity: 1;
+	-webkit-transition: all 0.3s ease-in-out;
+}
+
+div#slide-cart.slideIn {
+
+	margin-right: 0;
+}
+
+button.btn {
+	margin-right: 5px;
+}
+
+div#pane-controls {
+	padding: 5px;
+	position: absolute;
+	top: 0;
+	right: 0;
 }

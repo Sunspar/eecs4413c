@@ -11,8 +11,10 @@
 
 	<div id="footer-col">
 		<div class="col-md-4">
-			<p>Footer Goes Here</p>
-			Ticket = ${ticket}
+			<ul>
+				<li><a href="#">${ticket}</a></li>
+			</ul>
+			eFoods - All rights reserved.
 		</div>
 		<div class="col-md-4">
 			<ul>

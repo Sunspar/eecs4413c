@@ -66,10 +66,6 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		// Ensure we have a valid cart -- use session variable, or make one if it doesn't exist yet
 		ShoppingCart cart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
-		if (cart == null) {
-			cart = new ShoppingCart();
-			session.setAttribute(props.getProperty("INTERNAL_CART"), cart);
-		}
 		
 		// If the user asked to update the quantities of an item, update then now
 		if (request.getParameter(props.getProperty("SC_UPDATE")) != null) {
@@ -151,10 +147,15 @@ public class ShoppingCartServlet extends HttpServlet {
 				session.setMaxInactiveInterval(300);
 			}
 		/* FOR AJAX */	
-		} else if ((request.getParameter("addName") != null) && (request.getParameter("addID") != null) ) {
+		} else if ((request.getParameter("addName") != null) || (request.getParameter("addID") != null) ) {
 			String itemName = request.getParameter("addName");
 			String itemID = request.getParameter("addID");
-			isExternalAction = true;
+			
+			if (request.getParameter("submitExpress") != null ) {
+				isExternalAction = false;
+			} else {
+				isExternalAction = true;
+			}
 			
 			// Server response
 			response.setContentType("text/html");
@@ -170,6 +171,8 @@ public class ShoppingCartServlet extends HttpServlet {
 				session.setAttribute("lastAddCartNum", itemName);
 			} catch (Exception e) {
 				//e.printStackTrace();
+				// Store error message in request
+				request.setAttribute("errorCart", "Item " + itemID + " does not exist or is no longer available!" );
 				out.write("Server says: add failed\nNo such item:" + itemName);
 			}
 		}
@@ -180,6 +183,7 @@ public class ShoppingCartServlet extends HttpServlet {
 			for (int idx = 0; idx < cart.size(); idx ++) {
 				ShoppingCartItem item = cart.getItem(idx);
 				item.setPrice(mProduct.getItemPrice(item.getName()));
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,6 +195,10 @@ public class ShoppingCartServlet extends HttpServlet {
 			if (isPurchaseOrderCreated) {
 				request.setAttribute("target", "/OrderComplete.jspx");
 			} else {
+				// Ask model to calculate shipping rate
+				request.setAttribute("shipping", mProduct.calculateShippingRate(cart.getCartContents()));
+				// Ask model to get current tax rate
+				request.setAttribute("tax", mProduct.getTaxRate());
 				request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
 				request.setAttribute("target", "/Cart.jspx");
 			}

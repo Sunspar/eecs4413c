@@ -23,6 +23,7 @@
 							<span class="text-link">Cart</span>
 					</a>
 				</li>
+				<h4 class="title-divider">Shop</h4>
 				<c:forEach items="${categories}" var="cat">
 					<li><a href="${pageContext.request.contextPath}/e/Category?id=${cat.id}">
 							<span class="flaticon-${cat.id}"></span><span class="text-link">${cat.name}</span>
@@ -30,6 +31,33 @@
 					</li>
 				</c:forEach>
 			</ul>
+			
+			
+	
+		 <form action="${pageContext.request.contextPath}/e/Cart" method="POST">
+		 <table>
+		 <h4 class="title-divider">Express Cart:</h4>
+		 <FIELDSET>
+		 	<tr>
+		    	<td><label for="addID" accesskey="u">Item Number:</label></td>
+				<td><input class="form-control" type="text" name="addID" placeholder="SN89310A" value=""/></td>
+		    </tr>
+		
+			<tr>
+			<td></td>
+				<td align="right"><!-- <button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${x.number}'); doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
+			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+							</button> -->
+							<button type="submit" class="btn btn-default btn-sm" name="submitExpress" value="true" >
+			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+							</button>
+				</td>
+			</tr>
+		</FIELDSET>
+		</table>
+		</form>
 
 </html>
 </jsp:root>

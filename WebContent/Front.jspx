@@ -1,5 +1,6 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
-	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0"
+	xmlns:my="urn:jsptld:/WEB-INF/taglib.tld" >
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
 		pageEncoding="ISO-8859-1" session="false" />
 	<jsp:output doctype-root-element="html"
@@ -22,6 +23,17 @@
 <script src="${pageContext.request.contextPath}/res/js/script.js" type="text/javascript">;</script>
 </head>
 <body>
+	<div id="slide-cart" class="">
+		<div id="pane-controls">
+			<button class="btn btn-warning" onclick="reload();" alt="#">
+  					<span class="glyphicon glyphicon-refresh user"></span>
+  			</button>
+			<button class="btn btn-warning" onclick="slideOut('slide-cart');" alt="#">
+  					<span class="glyphicon glyphicon-remove user"></span>
+  			</button>
+		</div>
+		<jsp:include page="MiniCart.jspx"></jsp:include>
+	</div>
 
 	<div class="container-fluid" id="wrap">		
 		<div class="row">
@@ -50,27 +62,7 @@
 			
 			<c:choose>
 			<c:when test="${empty target}">
-				<div class="row">
-					<div class="col-md-12">
-						<h1>Tis the season to be jolly!</h1>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-11" id="splash" >&#160;</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<h3>Start the New Year early with nutritious snacks!</h3>
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
-					<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/milk.png" class="img-responsive img-thumbnail"/></div>
-					<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
-					<div class="hidden-xs col-md-3"><img src="${pageContext.request.contextPath}/res/milk.png" class="img-responsive img-thumbnail"/></div>
-				</div>
-				
+				<jsp:include page="/FrontContent.jspx"></jsp:include>
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${target}"></jsp:include>
@@ -80,13 +72,12 @@
 			</div>
 		
 		</div><!-- /row -->
-		
 
 		<div class="row" id="footer">
 			<jsp:include page="Footer.jspx">
 	    	</jsp:include>
 		</div>
-		
+
 	</div>
 
 

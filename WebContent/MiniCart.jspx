@@ -2,22 +2,21 @@
 			xmlns:c="http://java.sun.com/jsp/jstl/core"  
 			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
 			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
+<jsp:directive.page contentType="text/html; charset=UTF-8" 
 		pageEncoding="UTF-8" session="false"/>
-	<jsp:output doctype-root-element="html"
+<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-	<title>eFoods - Shopping Cart</title>
-	</head>
+	<head>MiniCart</head>
+	
 	<body>
-		<h1> Your Shopping Cart</h1><br />
+		<h4>Your Cart</h4><br />
 		<c:if test="${not empty errorCart }">
 			<h5>${errorCart}</h5>
 		</c:if>
-		<table class="cart">
+		<table class="mini-cart">
 			<c:if test="${not empty cartContents}">
 				<form action="${pageContext.request.contextPath}/e/Cart" method="POST">
 					<tr>
@@ -67,20 +66,23 @@
 						<td><h4>Total:</h4></td>
 						<td><f:formatNumber type="currency" value="${(tax * (shipping + total)) + (shipping + total)}"></f:formatNumber></td>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td><button type="submit" name="continue" value="true" class="btn btn-success">Continue Shopping</button></td>
-						<td><button type="submit" name="updateQuantities" class="btn btn-success">Update Cart</button></td>
-						<td><button type="submit" name="checkout" class="btn btn-success">Checkout Cart</button></td>
-					</tr>
+
+				<tr>
+					<button type="submit" name="continue" value="true" class="btn btn-success">Continue Shopping</button> 
+					<button type="submit" name="updateQuantities" class="btn btn-success">Update Cart</button> 
+					<button type="submit" name="checkout" class="btn btn-success">Checkout Cart</button>
+				</tr>
 				</form>
 			</c:if>
+			
 			<c:if test="${empty cartContents}">
+				<form action="${pageContext.request.contextPath}/e/" method="POST">
 				<h4>Your cart appears to be empty!</h4>
 				<button type="submit" name="continue" value="true" class="btn btn-success">Start shopping!</button>
+				</form>
 			</c:if>
 		</table>
+		
 	</body>
 </html>
 </jsp:root>

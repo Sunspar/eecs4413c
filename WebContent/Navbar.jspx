@@ -27,12 +27,16 @@
 		</ul>
 		</div>
   			<div class="col-md-3">
-  				<span class="glyphicon glyphicon-shopping-cart user">&#160;</span>
+  				<button class="btn btn-success" onclick="slideIn('slide-cart');" alt="#">
+  					<span class="glyphicon glyphicon-shopping-cart user"></span>
+  				</button>
   				<span class="glyphicon glyphicon-user user">&#160;</span>
   				
   				<c:choose>
 				      <c:when test="${not empty name}">
 				      		<span class="user">Hello <c:out value="${name}"/>!</span>
+				      		&#160;
+			  				<a href="${pageContext.request.contextPath}/e/Logout" alt="#" class="user">Logout</a>
 				      </c:when>
 				
 				      <c:otherwise>

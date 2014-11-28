@@ -26,5 +26,27 @@
         <rtexprvalue>true</rtexprvalue>
       </attribute>
     </tag>
+    
+    <tag>
+      <description>Concise tag for placing items on a page</description>
+      <name>pItem</name>
+      <tag-class>tags.PItem</tag-class>
+      <body-content>scriptless</body-content>
+      <attribute>
+        <name>itemNum</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+        <name>mclass</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+        <name>context</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+      </attribute>
+    </tag>
 
 </taglib>
