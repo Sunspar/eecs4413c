@@ -224,9 +224,9 @@ public class B2B {
 
 	//input path to xml files and path to html report
 	public static void main(String[] args) throws Exception {
-		B2B b2b = new B2B("/home/thao/workspace/eecs4413c/orders", 
-				"/home/thao/workspace/eecs4413c");
-		//B2B b2b = new B2B(args[0], args[1]);
+//		B2B b2b = new B2B("/home/thao/workspace/eecs4413c/orders", 
+//				"/home/thao/workspace/eecs4413c");
+		B2B b2b = new B2B(args[0], args[1]);
 		
 		HashMap<String, Integer> list = b2b.getRawOrder();
 		HashMap<String, ArrayList<String>> orderMapWtCompany = b2b.orderWtCompanyMap(list);
