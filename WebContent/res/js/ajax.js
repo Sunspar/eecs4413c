@@ -17,7 +17,6 @@ function doAddCart(itemName, itemID, path, object)
 			console.log("Ajax successful! Added = " + itemName);
 			console.log("Response:\n" + xmlhttp.responseText);
 			console.log($this);
-			
 		}
 	}
 	

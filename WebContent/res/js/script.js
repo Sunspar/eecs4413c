@@ -9,3 +9,17 @@ function fade(id) {
 		document.getElementById(id).classList.remove("fadeIn");
 	}, 500);
 }
+
+function slideIn(id) {
+	document.getElementById(id).classList.add("slideIn");
+}
+
+function slideOut(id) {
+	document.getElementById(id).classList.remove("slideIn");
+}
+
+
+function reload(){
+	location.reload();
+}
+

@@ -87,6 +87,22 @@ public class FrontServlet extends HttpServlet {
 			System.out.println(session.getAttribute("name"));
 			request.setAttribute("name", session.getAttribute("name"));
 		}
+		
+		// Create Global user cart
+		// Needed for always-ready cart view
+		ShoppingCart cart = (ShoppingCart) session.getAttribute(props.getProperty("INTERNAL_CART"));
+		if (cart == null) {
+			System.out.println("[ShoppingCartServlet]: created new cart!");
+			cart = new ShoppingCart();
+			session.setAttribute(props.getProperty("INTERNAL_CART"), cart);
+		}
+		if (session.getAttribute("INTERNAL_CART") != null){
+			// Ask model to calculate shipping rate
+			request.setAttribute("shipping", mProduct.calculateShippingRate(cart.getCartContents()));
+			// Ask model to get current tax rate
+			request.setAttribute("tax", mProduct.getTaxRate());
+			request.setAttribute("cartContents", ((ShoppingCart)session.getAttribute("INTERNAL_CART")).getCartContents());
+		}
 
 		/* Dispatch the request to the appropriate servlet */
 		if (((request.getParameter("AuthenticationRequest") != null) && (request.getAttribute("triedLogin") == null)) 
@@ -100,7 +116,7 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("ticket", "F-to-Products");
 			this.getServletContext().getNamedDispatcher("ProductServlet").forward(request, response);
 		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart"))
+		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Cart") && request.getParameter("continue") == null)
 		{
 			request.setAttribute("ticket", "F-to-Cart");
 			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);

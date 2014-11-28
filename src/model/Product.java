@@ -64,4 +64,21 @@ public class Product {
     	return mDAO.getItemPrice(itemName);
     }
 
+	public double calculateShippingRate(List<ShoppingCartItem> cartContents) {
+		final double cap = 100.0;
+		final double free = 0.0;
+		final double standard = 5.0;
+		double total = 0.0;
+		for (int i = 0; i < cartContents.size(); i++) {
+			total += (cartContents.get(i).getPrice()) * (cartContents.get(i).getQuantity());
+		}
+		
+		return (total >= cap) ? free : standard;
+	}
+
+	public double getTaxRate() {
+		final double tax = 0.13;
+		return tax;
+	}
+
 }

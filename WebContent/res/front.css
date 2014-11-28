@@ -392,3 +392,37 @@ div#crossSales {
 a.item-link {
 	color: #34495e;
 }
+
+/* Sliding Catalog Cart */
+div#slide-cart {
+	padding: 10px;
+	z-index: 100;
+	height: 100%;
+	position: fixed;
+	width: 40%;
+	margin-right: -41%;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(236, 240, 241,0.92);
+	overflow-y: scroll;
+	border: 0;
+	opacity: 1;
+	-webkit-transition: all 0.3s ease-in-out;
+}
+
+div#slide-cart.slideIn {
+
+	margin-right: 0;
+}
+
+button.btn {
+	margin-right: 5px;
+}
+
+div#pane-controls {
+	padding: 5px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}

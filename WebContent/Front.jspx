@@ -24,6 +24,18 @@
 </head>
 <body>
 
+	<div id="slide-cart" class="">
+		<div id="pane-controls">
+			<button class="btn btn-warning" onclick="reload();" alt="#">
+  					<span class="glyphicon glyphicon-refresh user"></span>
+  			</button>
+			<button class="btn btn-warning" onclick="slideOut('slide-cart');" alt="#">
+  					<span class="glyphicon glyphicon-remove user"></span>
+  			</button>
+		</div>
+		<jsp:include page="MiniCart.jspx"></jsp:include>
+	</div>
+
 	<div class="container-fluid" id="wrap">		
 		<div class="row">
 			<div class="col-md-12" id="header">
@@ -66,6 +78,8 @@
 			<jsp:include page="Footer.jspx">
 	    	</jsp:include>
 		</div>
+		
+		
 		
 	</div>
 
