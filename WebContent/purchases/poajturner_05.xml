@@ -1,0 +1,36 @@
+<?xml version='1.0'?><?xml-stylesheet type='text/xsl' href='PO.xsl'?>
+<order id="6" submitted="2014-11-27">
+    <customer account="ajturner">
+        <name>Andrew Turner</name>
+    </customer>
+    <total>35.87</total>
+    <shipping>5.0</shipping>
+    <HST>5.3130999999999995</HST>
+    <grandTotal>46.183099999999996</grandTotal>
+    <items>
+        <item number="2002H063">
+            <name>Semi-Cheddar Cheese by JC</name>
+            <price>4.26</price>
+            <quantity>3</quantity>
+            <extended>12.78</extended>
+        </item>
+        <item number="2002H136">
+            <name>Soft Monterey Cheese by PY</name>
+            <price>5.36</price>
+            <quantity>1</quantity>
+            <extended>5.36</extended>
+        </item>
+        <item number="0905A112">
+            <name>T6 Sirloin Meat</name>
+            <price>6.01</price>
+            <quantity>1</quantity>
+            <extended>6.01</extended>
+        </item>
+        <item number="0905A127">
+            <name>N1 Breast Meat</name>
+            <price>5.859999999999999</price>
+            <quantity>2</quantity>
+            <extended>11.719999999999999</extended>
+        </item>
+    </items>
+</order>

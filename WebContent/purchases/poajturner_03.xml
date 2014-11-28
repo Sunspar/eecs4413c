@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='PO.xsl'?>
+<order id="4" submitted="2014-11-27">
+    <customer account="ajturner">
+        <name>Andrew Turner</name>
+    </customer>
+    <total>6.4399999999999995</total>
+    <shipping>5.0</shipping>
+    <HST>1.4872</HST>
+    <grandTotal>12.9272</grandTotal>
+    <items>
+        <item number="1409S413">
+            <name>K5 Praline Ice Cream</name>
+            <price>6.4399999999999995</price>
+            <quantity>1</quantity>
+            <extended>6.4399999999999995</extended>
+        </item>
+    </items>
+</order>
