@@ -1,20 +1,21 @@
-<?xml version="1.0"?><?xml-stylesheet type='text/xsl' href='PO.xsl'?>
+<?xml version="1.0"?>
+
 <order id="120" submitted="2011-11-29">
 
-	<customer account="cse99999">
-		<name>Nine Corp</name>
+	<customer account="cse05738">
+		<name>Justin Andrew</name>
 	</customer>
 
 	<items>
-		<item number="0905A708">
-			<name>J0 Chicken Meat</name>
+		<item number="2910h785">
+			<name>N4 Raisin Cereal</name>
 			<price>5.02</price>
 			<quantity>100</quantity>
 			<extended>502.0</extended>
 		</item>
 
-		<item number="1409S381">
-			<name>Brownie Ice Cream with Praline by MG</name>
+		<item number="2910h145">
+			<name>Fruits Nuts Cereal by ZB</name>
 			<price>7.39</price>
 			<quantity>120</quantity>
 			<extended>886.8</extended>

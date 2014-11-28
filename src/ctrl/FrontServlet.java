@@ -87,9 +87,14 @@ public class FrontServlet extends HttpServlet {
 			System.out.println(session.getAttribute("name"));
 			request.setAttribute("name", session.getAttribute("name"));
 		}
-		
-		/* dispatcher */
-		if ((request.getPathInfo() != null && request.getPathInfo().equals("/Search")) 
+
+		/* Dispatch the request to the appropriate servlet */
+		if (((request.getParameter("AuthenticationRequest") != null) && (request.getAttribute("triedLogin") == null)) 
+				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Login"))) {
+			request.setAttribute("triedLogin", "");
+			request.setAttribute("ticket", "F-to-Login");
+			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
+		} else if ((request.getPathInfo() != null && request.getPathInfo().equals("/Search")) 
 				|| (request.getPathInfo() != null && request.getPathInfo().equals("/Category")))
 		{
 			request.setAttribute("ticket", "F-to-Products");
@@ -100,10 +105,7 @@ public class FrontServlet extends HttpServlet {
 			request.setAttribute("ticket", "F-to-Cart");
 			this.getServletContext().getNamedDispatcher("ShoppingCartServlet").forward(request, response);
 		} 
-		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Login")) {
-			request.setAttribute("ticket", "F-to-Login");
-			ctx.getNamedDispatcher("LoginServlet").forward(request, response);
-		} 
+		 
 		else if (request.getPathInfo() != null && request.getPathInfo().equals("/Analytics")) {
 			request.setAttribute("ticket", "F-to-Analytics");
 			ctx.getNamedDispatcher("Analytics").forward(request, response);

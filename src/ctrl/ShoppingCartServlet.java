@@ -55,6 +55,7 @@ public class ShoppingCartServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Flag to see if action is external to shopping cart JSP 
 		boolean isExternalAction = false;
+		boolean isLoginNeeded = false; // Triggers a forced login on exiting the cart, if the user is not logged in
 		
 		ServletContext ctx = getServletContext();
 		Properties props = (Properties) ctx.getAttribute(ctx.getInitParameter("PROPERTIES"));
@@ -106,37 +107,45 @@ public class ShoppingCartServlet extends HttpServlet {
 			 * 3. (for now) : set target so that the user can view their link to the PO
 			 */
 			CustomerBean customer = (CustomerBean) session.getAttribute(props.getProperty("INTERNAL_CUSTOMER"));
-			ShoppingCartWrapper wrapper = new ShoppingCartWrapper(customer, cart.getCartContents());
 			
-			try {
-				JAXBContext jc = JAXBContext.newInstance(wrapper.getClass());
-				Marshaller marshaller = jc.createMarshaller();
-				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-				marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			// If the customer doesn't exist, then force them to login
+			if (customer == null) {
+				isLoginNeeded = true;
+			} else {
+				try {
+					String rootFolder = ctx.getRealPath(props.getProperty("SC_PO_ROOT_FOLDER"));
+					String poFilename = getPOFilename(rootFolder, customer.getAccount());
+					long orderId = getOrderNumber(rootFolder);
+					ShoppingCartWrapper wrapper = new ShoppingCartWrapper(customer, orderId, cart.getCartContents());
+					
+					JAXBContext jc = JAXBContext.newInstance(wrapper.getClass());
+					Marshaller marshaller = jc.createMarshaller();
+					marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+					marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+					
+					StringWriter sw = new StringWriter();
+					sw.write("\n");
+					marshaller.marshal(wrapper, new StreamResult(sw));
+					  
+					System.out.println(sw.toString()); // for debugging
+					
+					String poFileLocation = rootFolder + File.separator + poFilename;
+					FileWriter fw = new FileWriter(poFileLocation);
+					fw.write("<?xml version='1.0'?>");
+					fw.write("<?xml-stylesheet type='text/xsl' href='PO.xsl'?>");
+					fw.write(sw.toString());
+					fw.close();
+					
+					cart.empty();
+				} catch (JAXBException e) {
+					throw new ServletException("Error parsing XML for checkout!");
+				}
 				
-				StringWriter sw = new StringWriter();
-				sw.write("\n");
-				marshaller.marshal(wrapper, new StreamResult(sw));
-				  
-				System.out.println(sw.toString()); // for debugging
-				String rootFolder = props.getProperty("SC_PO_ROOT_FOLDER");
-				String poFilename = "test.xml";
-				String poFileLocation = ctx.getRealPath(rootFolder + File.separator + poFilename);
-				FileWriter fw = new FileWriter(poFileLocation);
-				fw.write("<?xml version='1.0'?>");
-				fw.write("<?xml-stylesheet type='text/xsl' href='PO.xsl'?>");
-				fw.write(sw.toString());
-				fw.close();
-				
-				cart.empty();
-			} catch (JAXBException e) {
-				throw new ServletException("Error parsing XML for checkout!");
+				// Add checkout attribute to HTTPSession for analytics
+				session.setAttribute("checkout", System.currentTimeMillis());
+				// If session is untouched for 5 mins, count as fresh visit -- should be placed some place more general
+				session.setMaxInactiveInterval(300);
 			}
-			
-			// Add checkout attribute to HTTPSession for analytics
-			session.setAttribute("checkout", System.currentTimeMillis());
-			// If session is untouched for 5 mins, count as fresh visit -- should be placed some place more general
-			session.setMaxInactiveInterval(300);
 		/* FOR AJAX */	
 		} else if ((request.getParameter("addName") != null) || (request.getParameter("addID") != null) ) {
 			String itemName = request.getParameter("addName");
@@ -178,12 +187,41 @@ public class ShoppingCartServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		if (!isExternalAction) {
+		if (isLoginNeeded) {
+			request.setAttribute("target", "/Login.jspx");
+			request.getRequestDispatcher("/Front.jspx").forward(request, response);
+		} else if (!isExternalAction) {
 			request.setAttribute(props.getProperty("CART_CONTENTS"), cart.getCartContents());
 			request.setAttribute("target", "/Cart.jspx");
 			request.getRequestDispatcher("/Front.jspx").forward(request, response);
 		}
 	}
 
+	private String getPOFilename(String poFolder, String accountID) {
+		File[] listing = new File(poFolder).listFiles();
+		if (listing == null) {
+			return "po" + accountID + "_01.xml";
+		}
+		int personalOrderNumber = 1;
+		
+		for (File item : listing) {
+			if (item.getName().contains(accountID)) {
+				personalOrderNumber++;
+			}
+		}
+		String result = "po"+ accountID;
+		if (personalOrderNumber < 10) {
+			result += "_0"+ personalOrderNumber;
+		} else {
+			result += "_" + personalOrderNumber;
+		}
+		result += ".xml";
+		return result;
+		
+	}
+	
+	private long getOrderNumber(String poFolder) {
+		File[] listing = new File(poFolder).listFiles();
+		return listing.length + 1;
+	}
 }
