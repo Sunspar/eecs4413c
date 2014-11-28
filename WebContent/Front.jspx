@@ -23,7 +23,6 @@
 <script src="${pageContext.request.contextPath}/res/js/script.js" type="text/javascript">;</script>
 </head>
 <body>
-/
 	<div id="slide-cart" class="">
 		<div id="pane-controls">
 			<button class="btn btn-warning" onclick="reload();" alt="#">
