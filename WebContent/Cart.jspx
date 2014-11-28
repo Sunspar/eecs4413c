@@ -1,86 +1,99 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-	<title>eFoods - Shopping Cart</title>
-	</head>
-	<body>
-		<h1> Your Shopping Cart</h1><br />
-		<c:if test="${not empty errorCart }">
-			<h5>${errorCart}</h5>
-		</c:if>
-		<table class="cart">
-			<c:if test="${not empty cartContents}">
-				<form action="${pageContext.request.contextPath}/e/Cart" method="POST">
-					<tr>
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>eFoods - Shopping Cart</title>
+</head>
+<body>
+	<h1>Your Shopping Cart</h1>
+	<br />
+	<c:if test="${not empty errorCart }">
+		<h5>${errorCart}</h5>
+	</c:if>
+	<table class="cart">
+		<c:if test="${not empty cartContents}">
+			<form action="${pageContext.request.contextPath}/e/Cart"
+				method="POST">
+				<tr>
 					<td><h4>Item Number</h4></td>
 					<td><h4>Item Name</h4></td>
 					<td><h4>Price</h4></td>
 					<td><h4>Quantity</h4></td>
 					<td><h4>Full Cost</h4></td>
-					</tr>
-					<c:set var="total" value="0"></c:set>
-					<c:forEach var="item" items="${cartContents}" varStatus="loop">
-							<tr>
-								<td>${item.number}</td>
-								<td><label name="itemName${loop.index}">${item.name}</label></td>
-								<td><f:formatNumber type="currency" value="${item.price}"></f:formatNumber></td>
-								<td> <input class="form-control" name="itemQuantity${loop.index}" type="text" value="${item.quantity}"/></td>
-								<c:set var="total" value="${total + item.price * item.quantity}"></c:set>
-								<td><f:formatNumber type="currency" value="${item.price * item.quantity}"></f:formatNumber></td>
-							</tr>
-							
-					</c:forEach>
+				</tr>
+				<c:set var="total" value="0"></c:set>
+				<c:forEach var="item" items="${cartContents}" varStatus="loop">
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><h4>Subtotal:</h4></td>
-						<td><f:formatNumber type="currency" value="${total}"></f:formatNumber></td>
+						<td>${item.number}</td>
+						<td><label name="itemName${loop.index}">${item.name}</label></td>
+						<td><f:formatNumber type="currency" value="${item.price}">
+							</f:formatNumber></td>
+						<td><input class="form-control"
+							name="itemQuantity${loop.index}" type="text"
+							value="${item.quantity}" /></td>
+						<c:set var="total" value="${total + item.price * item.quantity}"></c:set>
+						<td><f:formatNumber type="currency"
+								value="${item.price * item.quantity}"></f:formatNumber></td>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><h4>Shipping:</h4></td>
-						<td><f:formatNumber type="currency" value="${shipping}"></f:formatNumber></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><h4>HST:</h4></td>
-						<td><f:formatNumber type="percent" value="${tax}"></f:formatNumber></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><h4>Total:</h4></td>
-						<td><f:formatNumber type="currency" value="${(tax * (shipping + total)) + (shipping + total)}"></f:formatNumber></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td><button type="submit" name="continue" value="true" class="btn btn-success">Continue Shopping</button></td>
-						<td><button type="submit" name="updateQuantities" class="btn btn-success">Update Cart</button></td>
-						<td><button type="submit" name="checkout" class="btn btn-success">Checkout Cart</button></td>
-					</tr>
-				</form>
-			</c:if>
-			<c:if test="${empty cartContents}">
-				<h4>Your cart appears to be empty!</h4>
-				<button type="submit" name="continue" value="true" class="btn btn-success">Start shopping!</button>
-			</c:if>
-		</table>
-	</body>
-</html>
+
+				</c:forEach>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><h4>Subtotal:</h4></td>
+					<td><f:formatNumber type="currency" value="${total}">
+					</f:formatNumber></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><h4>Shipping:</h4></td>
+					<td><f:formatNumber type="currency" value="${shipping}">
+					</f:formatNumber></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><h4>HST:</h4></td>
+					<td><f:formatNumber type="percent" value="${tax}"></f:formatNumber></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><h4>Total:</h4></td>
+					<td><f:formatNumber type="currency"
+							value="${(tax * (shipping + total)) + (shipping + total)}">
+							</f:formatNumber></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td><button type="submit" name="continue" value="true"
+							class="btn btn-success">Continue Shopping</button></td>
+					<td><button type="submit" name="updateQuantities"
+							class="btn btn-success">Update Cart</button></td>
+					<td><button type="submit" name="checkout"
+							class="btn btn-success">Checkout Cart</button></td>
+				</tr>
+			</form>
+		</c:if>
+		<c:if test="${empty cartContents}">
+			<h4>Your cart appears to be empty!</h4>
+			<button type="submit" name="continue" value="true"
+				class="btn btn-success">Start shopping!</button>
+		</c:if>
+	</table>
+</body>
+	</html>
 </jsp:root>

@@ -1,54 +1,59 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 
-		<form class="search" action="${pageContext.request.contextPath}/e/Search" method="GET">
-			<input class="search-field" type="text" name="query"  placeholder="Type in search terms i.e. Milk" />
-			<button class="search-btn" type="submit" name="submit" value="true">
-				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-			</button>
-		</form>
-		
-		
-		<div class="row subnav">
-			<div class="col-md-9">
-			<ul>
-				<li><a href="${pageContext.request.contextPath}/e/">Home</a></li>
-				<c:forEach items="${categories}" var="cat">
-					<li><a href="#">${cat.name}</a></li>
-				</c:forEach>
+<form class="search"
+	action="${pageContext.request.contextPath}/e/Search" method="GET">
+	<input class="search-field" type="text" name="query"
+		placeholder="Type in search terms i.e. Milk" />
+	<button class="search-btn" type="submit" name="submit" value="true">
+		<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	</button>
+</form>
+
+
+<div class="row subnav">
+	<div class="col-md-9">
+		<ul>
+			<li><a href="${pageContext.request.contextPath}/e/">Home</a></li>
+			<c:forEach items="${categories}" var="cat">
+				<li><a href="#">${cat.name}</a></li>
+			</c:forEach>
 		</ul>
-		</div>
-  			<div class="col-md-3">
-  				<button class="btn btn-success" onclick="slideIn('slide-cart');" alt="#">
-  					<span class="glyphicon glyphicon-shopping-cart user"></span>
-  				</button>
-  				<span class="glyphicon glyphicon-user user">&#160;</span>
-  				
-  				<c:choose>
-				      <c:when test="${not empty name}">
-				      		<span class="user">Hello <c:out value="${name}"/>!</span>
+	</div>
+	<div class="col-md-3">
+		<button class="btn btn-success" onclick="slideIn('slide-cart');"
+			alt="#">
+			<span class="glyphicon glyphicon-shopping-cart user"></span>
+		</button>
+		<span class="glyphicon glyphicon-user user">&#160;</span>
+
+		<c:choose>
+			<c:when test="${not empty name}">
+				<span class="user">Hello <c:out value="${name}" />!
+				</span>
 				      		&#160;
-			  				<a href="${pageContext.request.contextPath}/e/Logout" alt="#" class="user">Logout</a>
-				      </c:when>
-				
-				      <c:otherwise>
-							<a href="${pageContext.request.contextPath}/e/Login" alt="#" class="user">Sign In</a>
+			  				<a href="${pageContext.request.contextPath}/e/Logout" alt="#"
+					class="user">Logout</a>
+			</c:when>
+
+			<c:otherwise>
+				<a href="${pageContext.request.contextPath}/e/Login" alt="#"
+					class="user">Sign In</a>
 			  				&#160;
 			  				<a href="#" alt="#" class="user">Register</a>
-				      </c:otherwise>
-				</c:choose>
- 
-  			</div>
-		</div>
-		
+			</c:otherwise>
+		</c:choose>
 
-</html>
+	</div>
+</div>
+
+
+	</html>
 </jsp:root>

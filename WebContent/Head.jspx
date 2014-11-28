@@ -1,22 +1,20 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 
-	
-	<h1 class="eFoods">eFoods</h1>
-	<div class="sub-container">
-		<h2 class="eFoods">Canada's number one food E-market!</h2>
-	</div>
-	<div class="header-bg-container">dsda
-	</div>
-	<!--  Phone = ${param.phone}
+
+<h1 class="eFoods">eFoods</h1>
+<div class="sub-container">
+	<h2 class="eFoods">Canada's number one food E-market!</h2>
+</div>
+<div class="header-bg-container">dsda</div>
+<!--  Phone = ${param.phone}
 	Ticket = ${ticket} -->
-</html>
+	</html>
 </jsp:root>

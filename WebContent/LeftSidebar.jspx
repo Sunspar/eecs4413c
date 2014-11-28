@@ -1,63 +1,57 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 
-		<!-- <h2>The Sidebar</h2> -->
-			<ul id="list-sidebar">
-				<li>
-					<a href="${pageContext.request.contextPath}/">
-						<span class="glyphicon glyphicon-home"></span>
-						<span class="text-link">Home</span>
-					</a>
-				</li>
-				<li>
-					<a href="${pageContext.request.contextPath}/e/Cart">
-							<span class="glyphicon glyphicon-shopping-cart"></span>
-							<span class="text-link">Cart</span>
-					</a>
-				</li>
-				<h4 class="title-divider">Shop</h4>
-				<c:forEach items="${categories}" var="cat">
-					<li><a href="${pageContext.request.contextPath}/e/Category?id=${cat.id}">
-							<span class="flaticon-${cat.id}"></span><span class="text-link">${cat.name}</span>
-						</a>
-					</li>
-				</c:forEach>
-			</ul>
-			
-			
-	
-		 <form action="${pageContext.request.contextPath}/e/Cart" method="POST">
-		 <table>
-		 <h4 class="title-divider">Express Cart:</h4>
-		 <FIELDSET>
-		 	<tr>
-		    	<td><label for="addID" accesskey="u">Item Number:</label></td>
-				<td><input class="form-control" type="text" name="addID" placeholder="SN89310A" value=""/></td>
-		    </tr>
-		
+<!-- <h2>The Sidebar</h2> -->
+<ul id="list-sidebar">
+	<li><a href="${pageContext.request.contextPath}/"> <span
+			class="glyphicon glyphicon-home"></span> <span class="text-link">Home</span>
+	</a></li>
+	<li><a href="${pageContext.request.contextPath}/e/Cart"> <span
+			class="glyphicon glyphicon-shopping-cart"></span> <span
+			class="text-link">Cart</span>
+	</a></li>
+	<h4 class="title-divider">Shop</h4>
+	<c:forEach items="${categories}" var="cat">
+		<li><a
+			href="${pageContext.request.contextPath}/e/Category?id=${cat.id}">
+				<span class="flaticon-${cat.id}"></span><span class="text-link">
+					${cat.name}</span>
+		</a></li>
+	</c:forEach>
+</ul>
+
+
+
+<form action="${pageContext.request.contextPath}/e/Cart" method="POST">
+	<table>
+		<h4 class="title-divider">Express Cart:</h4>
+		<FIELDSET>
 			<tr>
-			<td></td>
-				<td align="right"><!-- <button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${x.number}'); doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
-			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-							</button> -->
-							<button type="submit" class="btn btn-default btn-sm" name="submitExpress" value="true" >
-			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-							</button>
+				<td><label for="addID" accesskey="u">Item Number:</label></td>
+				<td><input class="form-control" type="text" name="addID"
+					placeholder="SN89310A" value="" /></td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td align="right">
+					<button type="submit" class="btn btn-default btn-sm"
+						name="submitExpress" value="true">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+					</button>
 				</td>
 			</tr>
 		</FIELDSET>
-		</table>
-		</form>
+	</table>
+</form>
 
-</html>
+	</html>
 </jsp:root>

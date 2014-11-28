@@ -1,58 +1,61 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
-			xmlns:my="urn:jsptld:/WEB-INF/taglib.tld" 
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:my="urn:jsptld:/WEB-INF/taglib.tld" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 </head>
-	<body>
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Tis the season to be jolly!</h1>
-			</div>
+<body>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Tis the season to be jolly!</h1>
 		</div>
-		<div class="row">
-			<div id="splash" >&#160;</div>
-		</div>
-				
-				
-			<!-- <div class="row">
-				<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
-				<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/milk.png" class="img-responsive img-thumbnail"/></div>
-				<div class="col-xs-4 col-md-3"><img src="${pageContext.request.contextPath}/res/cereal.jpg" class="img-responsive img-thumbnail"/></div>
-				<div class="hidden-xs col-md-3"><img src="${pageContext.request.contextPath}/res/milk.png" class="img-responsive img-thumbnail"/></div>
-			</div> -->
-			
-		<div class="row">
-			<div class="col-md-12">
-				<h3>Start the New Year early with nutritious snacks!</h3>
-			</div>
-		</div>
-			<!-- View designers can simply use the my:pItem tag to produce a list of products to advertise and showcase on front page -->
-		<my:pItem itemNum="2002H063" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="0905A112" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="2910h123" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="1409S004" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
+	</div>
+	<div class="row">
+		<div id="splash">&#160;</div>
+	</div>
 
-			
-		<div class="row">
-			<div class="col-md-12">
-				<h3>It's never too cold for Ice Cream! Introducing all-new flavours!</h3>
-			</div>
-		</div>
-		<!-- View designers can simply use the my:pItem tag to produce a list of products to advertise and showcase on front page -->
-		<my:pItem itemNum="1409S381" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="1409S413" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="1409S451" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
-		<my:pItem itemNum="1409S454" mclass="e-list-item-front" context="${pageContext.servletContext.contextPath}"></my:pItem>
 
-	</body>
-</html>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Start the New Year early with nutritious snacks!</h3>
+		</div>
+	</div>
+	<!-- View designers can simply use the my:pItem tag to produce a list of products
+	     to advertise and showcase on front page -->
+	<my:pItem itemNum="2002H063" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="0905A112" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="2910h123" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="1409S004" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<h3>It's never too cold for Ice Cream! Introducing all-new
+				flavours!</h3>
+		</div>
+	</div>
+	<!-- View designers can simply use the my:pItem tag to produce a list of products 
+	     to advertise and showcase on front page -->
+	<my:pItem itemNum="1409S381" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="1409S413" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="1409S451" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+	<my:pItem itemNum="1409S454" mclass="e-list-item-front"
+		context="${pageContext.servletContext.contextPath}"></my:pItem>
+
+</body>
+	</html>
 </jsp:root>

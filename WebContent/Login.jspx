@@ -14,43 +14,47 @@
 
 	<div class="row">
 		<div class="col-md-12">
-				<h1>eFoods Login</h1>
+			<h1>eFoods Login</h1>
 		</div>
 	</div>
-	
+
 	<table class="login-form">
-	 <form action="" method="POST">
-	 <FIELDSET>
-	 	<tr>
-	    <td><label for="username" accesskey="u">Username</label></td>
-		<td><input class="form-control" type="text" name="username" id="username" value=""/>
-	    	</td>
-	    </tr>
-	    
-	    <tr>
-		<td><label for="password" accesskey="p">Password</label></td>
-		<td width="250px"><input class="form-control" type="password" name="password" id="password"/></td>
-	    </tr>
-	
-		
-		<c:if test="${not empty error}">
-		<tr>
-    		<td colspan="2">
-    			<h5>Your credentials didnt match any record. Please try again.</h5>
-    			<h6><a href="#">Forgot Password</a></h6>
-			</td>
-		</tr>
-		</c:if>
-	
-		<tr>
-		<td></td>
-		<td align="right"><input class="btn btn-success" type="submit" name="AuthenticationRequest" value="login"/>
-		</td>
-		</tr>
-	</FIELDSET>
-	</form>
+		<form action="" method="POST">
+			<FIELDSET>
+				<tr>
+					<td><label for="username" accesskey="u">Username</label></td>
+					<td><input class="form-control" type="text" name="username"
+						id="username" value="" /></td>
+				</tr>
+
+				<tr>
+					<td><label for="password" accesskey="p">Password</label></td>
+					<td width="250px"><input class="form-control" type="password"
+						name="password" id="password" /></td>
+				</tr>
+
+
+				<c:if test="${not empty error}">
+					<tr>
+						<td colspan="2">
+							<h5>Your credentials didnt match any record. Please try
+								again.</h5>
+							<h6>
+								<a href="#">Forgot Password</a>
+							</h6>
+						</td>
+					</tr>
+				</c:if>
+
+				<tr>
+					<td></td>
+					<td align="right"><input class="btn btn-success" type="submit"
+						name="AuthenticationRequest" value="login" /></td>
+				</tr>
+			</FIELDSET>
+		</form>
 	</table>
 
 </body>
-</html>
+	</html>
 </jsp:root>

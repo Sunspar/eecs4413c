@@ -10,68 +10,71 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="order")
-@XmlType(propOrder = {"customer", "subTotal", "shipping", "hst", "grandTotal", "items"})
+@XmlRootElement(name = "order")
+@XmlType(propOrder = {"customer", "subTotal", "shipping", "hst", "grandTotal",
+    "items"})
 public class ShoppingCartWrapper {
-	
-	@XmlAttribute
-	private long id;
 
-	@XmlAttribute
-	String submitted;
-	
-	@XmlElement(name="customer")
-	CustomerBean customer;
-	
-	@XmlElement(name="item")
-	@XmlElementWrapper(name="items")
-	private List<ShoppingCartItem> items;
-	
-	@XmlElement(name="total")
-	private double subTotal;
-	
-	@XmlElement(name="shipping")
-	private double shipping;
-	
-	@XmlElement(name="HST")
-	private double hst;
-	
-	@XmlElement(name="grandTotal")
-	private double grandTotal;
-	
-	public ShoppingCartWrapper(CustomerBean customer, long orderId, List<ShoppingCartItem> items) {
-		this.customer = customer;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		this.submitted = sdf.format(new Date());
-		this.id = orderId; // TODO: Generate proper order ID number
-		this.items = items;
+  @XmlAttribute
+  private long id;
 
-		this.subTotal = 0;
-		for (ShoppingCartItem item: this.items) {
-			this.subTotal += item.getPrice() * item.getQuantity();
-		}
-		
-		if (this.subTotal >= 100.00) {
-			this.shipping = 0.00;
-		} else {
-			this.shipping = 5.00;
-		}
-		
-		this.hst = 0.13 * (this.subTotal + this.shipping);
-		this.grandTotal = this.subTotal + this.hst + this.shipping;
-	}
-	
-	
-	public long getOrderId() {
-		return this.id;
-	}
-	
-	public String getSubmitted() {
-		return this.submitted;
-	}
-	
-	public CustomerBean getCustomer() {
-		return this.customer;
-	}
-	private ShoppingCartWrapper() {} // Do not call this constructor.
+  @XmlAttribute
+  String submitted;
+
+  @XmlElement(name = "customer")
+  CustomerBean customer;
+
+  @XmlElement(name = "item")
+  @XmlElementWrapper(name = "items")
+  private List<ShoppingCartItem> items;
+
+  @XmlElement(name = "total")
+  private double subTotal;
+
+  @XmlElement(name = "shipping")
+  private double shipping;
+
+  @XmlElement(name = "HST")
+  private double hst;
+
+  @XmlElement(name = "grandTotal")
+  private double grandTotal;
+
+  public ShoppingCartWrapper(CustomerBean customer, long orderId,
+      List<ShoppingCartItem> items) {
+    this.customer = customer;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    this.submitted = sdf.format(new Date());
+    this.id = orderId; // TODO: Generate proper order ID number
+    this.items = items;
+
+    this.subTotal = 0;
+    for (ShoppingCartItem item : this.items) {
+      this.subTotal += item.getPrice() * item.getQuantity();
+    }
+
+    if (this.subTotal >= 100.00) {
+      this.shipping = 0.00;
+    } else {
+      this.shipping = 5.00;
+    }
+
+    this.hst = 0.13 * (this.subTotal + this.shipping);
+    this.grandTotal = this.subTotal + this.hst + this.shipping;
+  }
+
+
+  public long getOrderId() {
+    return this.id;
+  }
+
+  public String getSubmitted() {
+    return this.submitted;
+  }
+
+  public CustomerBean getCustomer() {
+    return this.customer;
+  }
+
+  private ShoppingCartWrapper() {} // Do not call this constructor.
 }

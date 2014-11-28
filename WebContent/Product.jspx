@@ -1,17 +1,16 @@
-<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page"
-			xmlns:c="http://java.sun.com/jsp/jstl/core"  
-			xmlns:f="http://java.sun.com/jsp/jstl/fmt"
-			xmlns:my="urn:jsptld:/WEB-INF/taglib.tld"
-			version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:my="urn:jsptld:/WEB-INF/taglib.tld" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Main Fragment</title>
+<title>Main Fragment</title>
 </head>
 <body>
 
@@ -20,15 +19,15 @@
 			<h1>No results.</h1>
 		</c:when>
 		<c:otherwise>
-		
-		
+
+
 			<c:choose>
 				<c:when test="${displayType eq 'category' }">
 					<c:forEach var="cat" items="${categories}">
-					<c:if test="${cat.id == itemsByCat[0].catID}">
-						<c:set var="catName" value="${cat.name}"></c:set>
-						<c:set var="catID" value="${cat.id}"></c:set>
-					</c:if>
+						<c:if test="${cat.id == itemsByCat[0].catID}">
+							<c:set var="catName" value="${cat.name}"></c:set>
+							<c:set var="catID" value="${cat.id}"></c:set>
+						</c:if>
 					</c:forEach>
 					<h1>Food Category: ${catName}</h1>
 				</c:when>
@@ -36,83 +35,97 @@
 					<h1>Search Results for: ${query}</h1>
 				</c:when>
 			</c:choose>
-			
+
 			<c:if test="${not empty saleItems}">
-					<div id="crossSales">
-						<h4 class="cross-sale-caption">You might also be interested in:</h4>
-						<c:forEach var="item" items="${saleItems}">
-							<!-- ${item.name}   ${item.number}   ${item.price} <button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${x.number}'); doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
-			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-							</button><br /> -->
-							<div class="e-list-item-small">
-							
-								<table>
-									<tr>
-										<td>
-										<h5 align="left"><a class="item-link" href="${pageContext.request.contextPath}/e/Item?num=${item.number}">${item.name}</a></h5>
-										<h6 align="left">${item.number}</h6 ><h5 align="left"><f:formatNumber type="currency" value="${item.price}"></f:formatNumber></h5>
+				<div id="crossSales">
+					<h4 class="cross-sale-caption">You might also be interested
+						in:</h4>
+					<c:forEach var="item" items="${saleItems}">
+						<div class="e-list-item-small">
+
+							<table>
+								<tr>
+									<td>
+										<h5 align="left">
+											<a class="item-link"
+												href="${pageContext.request.contextPath}/e/Item?num=${item.number}">
+												${item.name}</a>
+										</h5>
+										<h6 align="left">${item.number}</h6>
+										<h5 align="left">
+											<f:formatNumber type="currency" value="${item.price}">
+											</f:formatNumber>
+										</h5>
 										<div class="cart-btn-container" align="left">
-											<button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${item.number}'); doAddCart('${item.name}', '${item.number}', '${pageContext.request.contextPath}', this);">
-							  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+											<button type="button" class="btn btn-default btn-sm"
+												onclick="fade('splash-${item.number}'); 
+												         doAddCart('${item.name}',
+												                   '${item.number}',
+												                   '${pageContext.request.contextPath}',
+												                   this);">
+												<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+												<span class="glyphicon glyphicon-shopping-cart"
+													aria-hidden="true"></span>
 											</button>
 										</div>
-										</td>
-										
-										<td>
-										<a href="${pageContext.request.contextPath}/e/Item?num=${item.number}">
-										<div class="product-img-container">
-											<div class="add-splash" id="splash-${item.number}">
-												Added to Cart!
+									</td>
+
+									<td><a
+										href="${pageContext.request.contextPath}/e/Item?num=${item.number}">
+											<div class="product-img-container">
+												<div class="add-splash" id="splash-${item.number}">
+													Added to Cart!</div><img
+													src="${pageContext.request.contextPath}/res/img/cat-${item.catID}/1.jpg"
+													class="img-responsive img-thumbnail" />
 											</div>
-											<!-- Custom tag to produce random image -->
-											<!--<my:pImg mclass="img-responsive img-thumbnail" path="${pageContext.request.contextPath}/res/img/cat-${catID}/"></my:pImg>-->
-											<img src="${pageContext.request.contextPath}/res/img/cat-${item.catID}/1.jpg" class="img-responsive img-thumbnail"/>
-										</div>
-										</a>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</c:forEach>
-						
-						
-						
-					</div>
+									</a></td>
+								</tr>
+							</table>
+						</div>
+					</c:forEach>
+
+
+
+				</div>
 			</c:if>
 
-				<c:forEach var="x" items="${itemsByCat}">
-					<div class="e-list-item">
-						<h4><a class='item-link' href='${pageContext.request.contextPath}/e/Item?num=${x.number}'>${x.name}</a></h4>
-						<h6>${x.number}</h6 ><h5 align="right"><f:formatNumber type="currency" value="${x.price}"></f:formatNumber></h5>
-						<a href="${pageContext.request.contextPath}/e/Item?num=${x.number}">
-							<div class="product-img-container">
-								<div class="add-splash" id="splash-${x.number}">
-									Added to Cart!
-								</div>
-								<!-- Custom tag to produce random image -->
-								<my:pImg mclass="img-responsive img-thumbnail" path="${pageContext.request.contextPath}/res/img/cat-${x.catID}/"></my:pImg>
-								<!-- <img src="${pageContext.request.contextPath}/res/img/cheese.jpg" class="img-responsive img-thumbnail"/> -->
-							</div>
-						</a>
-						<div class="cart-btn-container" align="right">
-							<button type="button" class="btn btn-default btn-sm" onclick="fade('splash-${x.number}'); doAddCart('${x.name}', '${x.number}', '${pageContext.request.contextPath}', this);">
-			  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			  						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-							</button>
+			<c:forEach var="x" items="${itemsByCat}">
+				<div class="e-list-item">
+					<h4>
+						<a class='item-link'
+							href='${pageContext.request.contextPath}/e/Item?num=${x.number}'>
+							${x.name}</a>
+					</h4>
+					<h6>${x.number}</h6>
+					<h5 align="right">
+						<f:formatNumber type="currency" value="${x.price}"></f:formatNumber>
+					</h5>
+					<a href="${pageContext.request.contextPath}/e/Item?num=${x.number}">
+						<div class="product-img-container">
+							<div class="add-splash" id="splash-${x.number}">Added to
+								Cart!</div>
+							<!-- Custom tag to produce random image -->
+							<my:pImg mclass="img-responsive img-thumbnail"
+								path="${pageContext.request.contextPath}/res/img/cat-${x.catID}/">
+							</my:pImg>
 						</div>
-						
+					</a>
+					<div class="cart-btn-container" align="right">
+						<button type="button" class="btn btn-default btn-sm"
+							onclick="fade('splash-${x.number}'); 
+							        doAddCart('${x.name}',
+							                  '${x.number}', 
+							                  '${pageContext.request.contextPath}', 
+							                  this);">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-shopping-cart"
+								aria-hidden="true"></span>
+						</button>
 					</div>
-				</c:forEach>
-		
+				</div>
+			</c:forEach>
 		</c:otherwise>
-	
 	</c:choose>
-	
-	
-
-
 </body>
-</html>
+	</html>
 </jsp:root>
