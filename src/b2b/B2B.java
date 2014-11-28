@@ -152,12 +152,12 @@ public class B2B {
 		    if (price > -1.0){
 		    	String company = getCompanyWtSuchPrice(itemNo, price);
 		    	
-		    	ArrayList<String> company_price = new ArrayList<String>();
-			    company_price.add(company);
-			    company_price.add(String.valueOf(price));
-			    company_price.add(String.valueOf(list.get(itemNo)));
+		    	ArrayList<String> companyPrice = new ArrayList<String>();
+			    companyPrice.add(company);
+			    companyPrice.add(String.valueOf(price));
+			    companyPrice.add(String.valueOf(list.get(itemNo)));
 			    
-			    order.put(itemNo, company_price);
+			    order.put(itemNo, companyPrice);
 		    }
 		    
 		}
