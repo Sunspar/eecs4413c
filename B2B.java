@@ -31,7 +31,6 @@ public class B2B {
 	
 	// get the price of an item from a specific provider
 	private double getPrice(String company, String itemNo) throws Exception { 
-		//String url = "http://roumani.eecs.yorku.ca:4413/axis/YYZ.jws?method=quote&itemNumber=0905A708"; 
 		String url = "http://roumani.eecs.yorku.ca:4413/axis/" + company +".jws?method=quote&itemNumber=" + itemNo; 
 	
 		URL obj = new URL(url);
@@ -200,20 +199,23 @@ public class B2B {
 	
 	public void genHTMLreport(HashMap<String, ArrayList<String>> order) throws Exception{
 		long now = System.currentTimeMillis();
-		System.out.println("output file is " + now + ".html");
 		
-		PrintWriter writer = new PrintWriter(outputPath + now + ".html", "UTF-8");
+		PrintWriter writer = new PrintWriter(outputPath +"/"+ now + ".html", "UTF-8");
+		System.out.println("output file is " + outputPath +"/" + now + ".html");
+		
 		writer.println("<p>Procurement Report</p>");
 		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
-		writer.println("<tr> <td>Item Number</td> <td>Winning Company</td> <td>Lowest Price</td><td>Confirmation Number</td></tr>");
+		writer.println("<tr> <td>Item Number</td><td>Quantity</td> <td>Winning Company</td>"+
+				"<td>Lowest Price</td><td>Confirmation Number</td></tr>");
 		
 		for (String itemNo : order.keySet()) {
 			String company = order.get(itemNo).get(0);
 			String price = order.get(itemNo).get(1);
+			String quantity = order.get(itemNo).get(2);
 			String confirmNo = orderItem(itemNo, company, order.get(itemNo).get(2));
 			
-			writer.println("<tr> <td>" + itemNo + "</td> <td>"+company+
-					"</td> <td>"+price+"</td><td>"+ confirmNo + "</td></tr>"); 
+			writer.println("<tr> <td>" + itemNo + "</td><td>" + quantity + "</td><td>"+company+
+					"</td> <td>"+ price +"</td><td>"+ confirmNo + "</td></tr>"); 
 		}
 		
 		writer.println("</table></body>	</html>");
@@ -221,9 +223,10 @@ public class B2B {
 	}
 
 	//input path to xml files and path to html report
-	public static void main(String[] args) throws Exception {		 
-		//B2B b2b = new B2B("/eecs/home/cse03257/workspace/eecs4413c/orders", "/eecs/home/cse03257/workspace/eecs4413c/");
-		B2B b2b = new B2B(args[0], args[1]);
+	public static void main(String[] args) throws Exception {
+		B2B b2b = new B2B("/home/thao/workspace/eecs4413c/orders", 
+				"/home/thao/workspace/eecs4413c");
+		//B2B b2b = new B2B(args[0], args[1]);
 		
 		HashMap<String, Integer> list = b2b.getRawOrder();
 		HashMap<String, ArrayList<String>> orderMapWtCompany = b2b.orderWtCompanyMap(list);
@@ -233,31 +236,3 @@ public class B2B {
 		b2b.genHTMLreport(orderMapWtCompany);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
