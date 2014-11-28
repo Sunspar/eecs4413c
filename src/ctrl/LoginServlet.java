@@ -11,6 +11,7 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
 import javax.crypto.Cipher;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +45,8 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String target = "/Login.jspx";
-	    
+		String target = "/Front.jspx";
+		req.setAttribute("target", "Login.jspx");
 		req.getRequestDispatcher(target).forward(req, resp);
 	}
 
@@ -69,7 +70,8 @@ public class LoginServlet extends HttpServlet {
 				!username.matches("[a-zA-Z0-9]*") || !password.matches("[a-zA-Z0-9]*")){
 			System.out.println("credential entered wrong format");
 			
-			String target = "/Login.jspx";
+			String target = "/Front.jspx";
+			req.setAttribute("target", "Login.jspx");
 		    req.setAttribute("error", 0);
 			req.getRequestDispatcher(target).forward(req, resp);
 			
@@ -82,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String ct = encrypt(pt);
 			String url = "http://www.cse.yorku.ca/~cse03257/auth.cgi?" + ct;
-			//System.out.println(url);
+			System.out.println(url);
 			
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -99,7 +101,8 @@ public class LoginServlet extends HttpServlet {
 	 
 			//login fails
 			if (response.equals("no")){
-				String target = "/Login.jspx";
+				String target = "/Front.jspx";
+				req.setAttribute("target", "Login.jspx");
 			    req.setAttribute("error", 0);
 				req.getRequestDispatcher(target).forward(req, resp);
 			}

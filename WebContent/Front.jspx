@@ -8,7 +8,7 @@
 		omit-xml-declaration="true" />
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Front</title>
+<title>eFoods - Canada's #1 Food E-Market!</title>
 <link href="${pageContext.request.contextPath}/res/front.css" type="text/css"
 	rel='stylesheet'/>
 <link href="${pageContext.request.contextPath}/res/bs/bootstrap-custom.css" type="text/css" rel='stylesheet'/>
