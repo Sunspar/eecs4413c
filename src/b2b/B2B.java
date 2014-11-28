@@ -172,6 +172,7 @@ public class B2B {
 	public void genHTMLreport(HashMap<String, ArrayList<String>> order) throws Exception{
 		long now = System.currentTimeMillis();
 		PrintWriter writer = new PrintWriter("/eecs/home/cse03257/workspace/eecs4413c/report" + now + ".html", "UTF-8");
+		writer.println("Procurement Report");
 		writer.println("<!DOCTYPE html>	<html><body><table style=\"width:100%\" border=\"1\">");
 		writer.println("<tr> <td>Item Number</td> <td>Company</td> <td>Price</td></tr>");
 		
