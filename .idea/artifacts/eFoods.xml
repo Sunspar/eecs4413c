@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="eFoods">
+    <output-path>$PROJECT_DIR$/build/artifacts/eFoods</output-path>
+    <root id="archive" name="eFoods.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="eFoods" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="eFoods/web/Web" />
+    </root>
+  </artifact>
+</component>
